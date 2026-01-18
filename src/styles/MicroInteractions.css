@@ -1,0 +1,126 @@
+/* ======================================================================
+   ⚡ FASTORDER QR – MicroInteractions.css (Enterprise 2026)
+   ----------------------------------------------------------------------
+   UX Dopamina · Feedback inmediato · Motion first
+   Inspirado en: Uber Eats · Starbucks · Shopify POS
+   ====================================================================== */
+
+/* ================================
+   ⏱️ Variables de timing UX
+================================ */
+:root {
+  --fo-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --fo-ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --fo-fast: 120ms;
+  --fo-normal: 200ms;
+  --fo-slow: 320ms;
+}
+
+/* ================================
+   ➕ Botón Agregar (dopamina)
+================================ */
+.fo-btn-primary {
+  transition:
+    transform var(--fo-fast) var(--fo-ease-out),
+    box-shadow var(--fo-fast) var(--fo-ease-out),
+    background-color var(--fo-fast) ease;
+}
+
+.fo-btn-primary:active {
+  transform: scale(0.96);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* ================================
+   🛒 Carrito flotante (feedback)
+================================ */
+.carrito-flotante {
+  animation: carrito-pop var(--fo-normal) var(--fo-ease-out);
+}
+
+@keyframes carrito-pop {
+  0% {
+    transform: scale(0.85) translateY(12px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05) translateY(-2px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ================================
+   🔢 Badge contador (micro bounce)
+================================ */
+.carrito-items {
+  animation: badge-bounce var(--fo-normal) var(--fo-ease-out);
+}
+
+@keyframes badge-bounce {
+  0% {
+    transform: scale(0.6);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ================================
+   🍽️ Cards producto (tap feedback)
+================================ */
+.producto-card-enterprise {
+  transition:
+    transform var(--fo-fast) var(--fo-ease-out),
+    box-shadow var(--fo-fast) ease;
+}
+
+.producto-card-enterprise:active {
+  transform: scale(0.98);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* ================================
+   ✨ Fade helpers
+================================ */
+.fade-in {
+  animation: fade-in var(--fo-slow) ease both;
+}
+
+.fade-in-up {
+  animation: fade-in-up var(--fo-slow) var(--fo-ease-out) both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+   🚫 Disabled feedback
+================================ */
+button:disabled {
+  opacity: 0.45;
+  transform: none !important;
+  box-shadow: none !important;
+}

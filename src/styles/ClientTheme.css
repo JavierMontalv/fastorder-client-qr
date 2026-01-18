@@ -1,0 +1,73 @@
+/* ============================================================
+   FASTORDER CLIENT QR — THEME FINAL 2026
+   Estilo uniforme con el panel administrador (azul premium)
+   ============================================================ */
+
+@import "./Colors.css";
+@import "./Theme.css";
+
+/* Aplicar fondo general premium */
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: var(--font-family);
+}
+
+/* Título */
+.menu-title {
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+/* Tabs de categorías */
+.categoria-tab {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.categoria-tab:hover {
+  background: var(--bg-surface-soft);
+  border-color: var(--brand-primary);
+}
+
+.categoria-tab.activa {
+  background: var(--brand-primary);
+  color: white;
+  border-color: var(--brand-primary-hover);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+}
+
+/* Cards */
+.producto-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+.producto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Precios */
+.producto-precio {
+  color: var(--brand-primary-hover);
+  font-weight: 700;
+}
+
+/* Botón Agregar */
+.btn-add {
+  background: var(--brand-primary);
+  color: white;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: none;
+  transition: var(--transition);
+}
+
+.btn-add:hover {
+  background: var(--brand-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}

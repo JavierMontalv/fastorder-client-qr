@@ -1,0 +1,100 @@
+/* ======================================================================
+   📄 client-qr/src/styles/Formulario.css
+   ----------------------------------------------------------------------
+   FASTORDER Client QR – Formularios Enterprise 2026
+   • Mobile-first REAL
+   • Compatible con BottomSheets
+   • Sin romper estilos existentes
+   • Reutilizable y escalable
+   ====================================================================== */
+
+/* ======================================================
+   🏷️ Label
+====================================================== */
+.fo-label {
+  display: block;
+  font-size: var(--font-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+/* ======================================================
+   ✏️ Input base
+====================================================== */
+.fo-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: var(--font-md);
+  font-family: var(--font-family);
+  color: var(--text-main);
+
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.fo-input::placeholder {
+  color: var(--text-soft);
+}
+
+/* ======================================================
+   🎯 Focus (accesible + UX premium)
+====================================================== */
+.fo-input:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  background: var(--bg-surface);
+}
+
+/* ======================================================
+   ❌ Error input
+====================================================== */
+.fo-input-error {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.fo-input-error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.22);
+}
+
+/* ======================================================
+   ⚠️ Texto de error
+====================================================== */
+.fo-text-error {
+  font-size: var(--font-sm);
+  color: #ef4444;
+  margin-top: 4px;
+}
+
+/* ======================================================
+   🚨 Alerta de error (bloque)
+====================================================== */
+.fo-alert-error {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #b91c1c;
+
+  font-size: var(--font-sm);
+  font-weight: var(--weight-medium);
+}
+
+/* ======================================================
+   📱 Mobile fine-tuning
+====================================================== */
+@media (max-width: 480px) {
+  .fo-input {
+    padding: 11px 13px;
+    font-size: var(--font-md);
+  }
+}

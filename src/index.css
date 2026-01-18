@@ -1,0 +1,35 @@
+/* ======================================================================
+   FASTORDER QR CLIENT – BASE GLOBAL STYLES (Enterprise Edition)
+   ----------------------------------------------------------------------
+   Este archivo NO debe sobrescribir colores del Theme/Colors.
+   Solo define ajustes mínimos del layout.
+   ====================================================================== */
+
+/* Importar Theme (colores + tipografías + sombras) */
+@import './styles/Theme.css';
+
+/* Reinicio mínimo */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Body bajo el Theme */
+body {
+  background: var(--bg-body);      /* ✔ FONDO ENTERPRISE */
+  color: var(--text-main);         /* ✔ TEXTO ENTERPRISE */
+  font-family: var(--font-family); /* ✔ TIPOGRAFÍA ENTERPRISE */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Contenedor general tipo Shopify POS */
+.qr-app-container {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 480px; /* tamaño perfecto móvil */
+  margin: 0 auto;
+  background: var(--bg-body);
+  box-shadow: 0 0 40px rgba(0,0,0,0.06);
+}

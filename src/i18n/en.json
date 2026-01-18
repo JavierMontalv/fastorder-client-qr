@@ -1,0 +1,124 @@
+{
+  "lang": "English",
+
+  "ui": {
+    "loading": "Loading...",
+    "close": "Close",
+    "back": "Back",
+    "see_more": "See more",
+    "cancel": "Cancel",
+    "continue": "Continue"
+  },
+
+  "home": {
+    "welcome": "Welcome",
+    "scan_qr": "Scan the QR code to view the menu",
+    "promotions": "Special promotions",
+    "popular": "Most ordered"
+  },
+
+  "menu": {
+    "title": "Menu",
+    "categories": "Categories",
+    "no_products": "No products available in this category.",
+    "add": "Add",
+    "currency": "$"
+  },
+
+  "product": {
+    "details": "Details",
+    "ingredients": "Ingredients",
+    "add_to_cart": "Add to cart",
+    "recommended": "Recommended for you",
+    "combine_with": "Pair it with"
+  },
+
+  "cart": {
+    "title": "Your Order",
+    "empty": "Your cart is empty",
+    "quantity": "Quantity",
+    "total": "Total",
+    "checkout": "Proceed to checkout",
+    "remove": "Remove"
+  },
+
+  "checkout": {
+    "title": "Confirm Order",
+    "your_order": "Your order",
+    "type": "Order type",
+    "table": "Dine in",
+    "takeaway": "Takeaway",
+    "payment_method": "Payment method",
+    "pay_cashier": "Pay at cashier",
+    "pay_now": "Pay now (Nequi / Daviplata / Card)",
+    "note_optional": "Optional note",
+    "note_placeholder": "Ex: No onions, extra sauce…",
+    "confirm": "Confirm order",
+    "sending": "Processing your order…"
+  },
+
+  "takeaway": {
+    "title": "Takeaway Information",
+    "pickup_point": "Pickup point",
+    "instructions": "Instructions",
+    "estimated_time": "Estimated time",
+    "contact": "Restaurant contact"
+  },
+
+  "order": {
+    "status_title": "Order status",
+    "received": "Order received",
+    "preparing": "Preparing your order…",
+    "ready": "Your order is ready",
+    "delivered": "Order delivered",
+    "timeline_received": "The restaurant has received your order",
+    "timeline_preparing": "Your food is being prepared",
+    "timeline_ready": "Ready for pickup or delivery",
+    "timeline_delivered": "Enjoy your meal",
+    "items": "Your items",
+    "total": "Total"
+  },
+
+  "order_progress": {
+    "pending": "Pending",
+    "preparation": "Preparation",
+    "ready": "Ready",
+    "delivered": "Delivered"
+  },
+
+  "ticket": {
+    "title": "Digital Receipt",
+    "order_number": "Order number",
+    "table": "Table",
+    "takeaway": "Takeaway",
+    "thanks": "Thank you for your order!",
+    "show_qr": "Show QR",
+    "download": "Download receipt"
+  },
+
+  "promo": {
+    "title": "Promotion",
+    "see_promo": "View promotion",
+    "limited_time": "Available for a limited time",
+    "special_event": "Special event",
+    "close_promo": "Got it"
+  },
+
+  "upsell": {
+    "title": "Want to add something extra?",
+    "suggested_for_you": "Suggested for you",
+    "add_combo": "Add combo",
+    "only": "Only"
+  },
+
+  "crosssell": {
+    "title": "Perfect to pair with"
+  },
+
+  "errors": {
+    "network": "Connection error",
+    "server": "Server unavailable",
+    "unexpected": "An unexpected error occurred",
+    "empty": "No results found"
+  }
+}

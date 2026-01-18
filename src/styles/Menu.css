@@ -1,0 +1,248 @@
+/* ===================================================================
+   FASTORDER CLIENT QR — UI Enterprise 2026 (Glass Premium)
+   Estilo unificado con Panel Admin
+   Colores: Azul #3b82f6 · Hover #2563eb
+=================================================================== */
+
+@import './Theme.css';
+@import './Colors.css';
+
+/* ========================================================
+   FONDO GLOBAL
+======================================================== */
+body {
+  background: var(--bg-soft);
+  margin: 0;
+}
+
+/* ========================================================
+   CONTENEDOR PRINCIPAL
+======================================================== */
+.menu-container {
+  padding: 80px 20px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: var(--font-family);
+  color: var(--text-main);
+}
+
+/* ========================================================
+   TÍTULO
+======================================================== */
+.menu-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--weight-bold);
+  text-align: center;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.menu-subtitle {
+  text-align: center;
+  font-size: var(--font-md);
+  color: var(--text-soft);
+  margin-bottom: 26px;
+}
+
+/* ========================================================
+   CATEGORÍAS — TABS PREMIUM (Shopify/Rappi)
+======================================================== */
+.categorias-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 10px 4px;
+  margin-bottom: 24px;
+}
+
+.categorias-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.categoria-tab {
+  padding: 10px 26px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.categoria-tab:hover {
+  background: var(--brand-primary-soft);
+}
+
+.categoria-tab.activa {
+  background: var(--brand-primary);
+  color: white;
+  border-color: var(--brand-primary);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+}
+
+/* ========================================================
+   GRID PRODUCTOS — Responsive Enterprise
+======================================================== */
+.menu-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 26px;
+}
+
+/* ========================================================
+   CARD PRODUCTO — ENTERPRISE 2026
+======================================================== */
+.producto-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================================================
+   🔥 IMAGEN CORREGIDA — (aspect-ratio = solución)
+======================================================== */
+.producto-img-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-soft);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.producto-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.producto-card:hover .producto-img {
+  transform: scale(1.05);
+}
+
+/* ========================================================
+   INFO DEL PRODUCTO
+======================================================== */
+.producto-info {
+  padding: 18px;
+}
+
+.producto-nombre {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--text-main);
+  margin: 0 0 6px 0;
+}
+
+.producto-precio {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  color: var(--brand-primary-hover);
+  margin-bottom: 14px;
+}
+
+/* ========================================================
+   BOTÓN — ENTERPRISE (Stripe Style)
+======================================================== */
+.btn-add {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--brand-primary);
+  border: none;
+  color: white;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-add:hover {
+  background: var(--brand-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ========================================================
+   🛒 CARRITO FLOTANTE — JERARQUÍA VISUAL CRÍTICA (PRO)
+   • Percepción de pedido activo
+   • Prioridad UX absoluta
+======================================================== */
+.carrito-flotante {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: var(--brand-primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  z-index: 50;
+}
+
+.carrito-flotante:hover {
+  background: var(--brand-primary-hover);
+}
+
+.carrito-icono {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.carrito-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.carrito-items {
+  font-size: var(--font-sm);
+  opacity: 0.9;
+}
+
+.carrito-total {
+  font-size: var(--font-md);
+  font-weight: var(--weight-bold);
+}
+
+/* ========================================================
+   MOBILE — Optimizado
+======================================================== */
+@media (max-width: 500px) {
+  .menu-container {
+    padding-top: 60px;
+  }
+
+  .menu-productos {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .carrito-flotante {
+    bottom: 12px;
+    right: 12px;
+    padding: 12px 16px;
+  }
+}

@@ -1,0 +1,97 @@
+/* ======================================================================
+   💳 Checkout.css — FASTORDER QR CLIENT 2026
+   Usa Theme.css + Colors.css (design tokens oficiales)
+   ====================================================================== */
+
+.checkout-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.checkout-title {
+  font-size: var(--font-xl);
+  font-weight: var(--weight-bold);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  color: var(--text-main);
+}
+
+.checkout-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.checkout-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-md);
+  color: var(--text-main);
+  margin-bottom: var(--space-sm);
+}
+
+.checkout-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-sm);
+  font-size: var(--font-md);
+  color: var(--text-soft);
+}
+
+.checkout-line input {
+  width: 96px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-soft);
+  color: var(--text-main);
+  font-size: var(--font-md);
+  text-align: right;
+  transition: var(--transition);
+}
+
+.checkout-line input:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--brand-primary-soft);
+  outline: none;
+  background: #ffffff;
+}
+
+.checkout-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-md);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-main);
+}
+
+.checkout-button {
+  width: 100%;
+  padding: 14px;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.checkout-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.checkout-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

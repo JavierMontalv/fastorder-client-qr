@@ -1,0 +1,213 @@
+/* ======================================================================
+   🛍 FASTORDER 2026 – TakeawayInfo.css
+   ----------------------------------------------------------------------
+   Glass UI · Sombras Stripe · Borde premium · Mobile-first
+   Estilos para el componente:
+   client-qr/src/components/TakeawayInfo.jsx
+   ====================================================================== */
+
+/* ------------------------------------------------------------
+   CARD PRINCIPAL – Glass + Stripe shadow
+------------------------------------------------------------ */
+.takeaway-card {
+  position: relative;
+  margin-top: 18px;
+  padding: 16px 18px 18px 18px;
+
+  border-radius: var(--radius-lg, 18px);
+  border: 1px solid rgba(148, 163, 184, 0.32);
+
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(248, 250, 252, 0.98) 40%,
+    rgba(241, 245, 249, 0.98) 100%
+  );
+
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  overflow: hidden;
+  animation: takeaway-fade-in 260ms ease-out;
+}
+
+/* LÍNEA LUMINOSA SUPERIOR (detalle premium) */
+.takeaway-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.16),
+    rgba(59, 130, 246, 0),
+    rgba(56, 189, 248, 0.16)
+  );
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+/* Overlay suave interno para dar profundidad */
+.takeaway-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+}
+
+/* Wrapper interno para no pisar los ::before/::after */
+.takeaway-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------
+   HEADER – Icono + títulos
+------------------------------------------------------------ */
+.takeaway-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+.takeaway-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--brand-primary, #3b82f6);
+  font-size: 16px;
+
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+.takeaway-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main, #0f172a);
+  letter-spacing: -0.01em;
+}
+
+.takeaway-subtitle {
+  font-size: 12px;
+  color: var(--text-muted, #64748b);
+  margin-top: 2px;
+}
+
+/* ------------------------------------------------------------
+   BODY – Filas de información
+------------------------------------------------------------ */
+.takeaway-body {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.takeaway-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.takeaway-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted, #64748b);
+}
+
+.takeaway-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main, #0f172a);
+  text-align: right;
+}
+
+/* ------------------------------------------------------------
+   NOTA / INSTRUCCIONES
+------------------------------------------------------------ */
+.takeaway-note {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.02);
+  border: 1px dashed rgba(148, 163, 184, 0.48);
+
+  font-size: 12px;
+  color: var(--text-soft, #334155);
+  line-height: 1.45;
+}
+
+/* ------------------------------------------------------------
+   ESTADO LOADING / VACÍO (por si se usa en el futuro)
+------------------------------------------------------------ */
+.takeaway-card.is-loading {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.takeaway-card.is-empty {
+  border-style: dashed;
+  border-color: rgba(148, 163, 184, 0.5);
+  background: rgba(248, 250, 252, 0.9);
+}
+
+/* ------------------------------------------------------------
+   ANIMACIONES
+------------------------------------------------------------ */
+@keyframes takeaway-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ------------------------------------------------------------
+   MOBILE-FIRST – Ajustes en pantallas pequeñas
+------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .takeaway-card {
+    margin-top: 14px;
+    padding: 14px 14px 16px 14px;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18);
+  }
+
+  .takeaway-title {
+    font-size: 14px;
+  }
+
+  .takeaway-subtitle {
+    font-size: 11px;
+  }
+
+  .takeaway-label {
+    font-size: 11px;
+  }
+
+  .takeaway-value {
+    font-size: 12px;
+  }
+
+  .takeaway-note {
+    font-size: 11px;
+    padding: 7px 9px;
+  }
+}

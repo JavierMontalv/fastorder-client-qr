@@ -1,0 +1,186 @@
+/* ============================================================================
+   🎫 FASTORDER – TICKET DIGITAL (Enterprise 2026)
+   Archivo: client-qr/src/styles/TicketDigital.css
+   Estilo: Stripe Terminal + Rappi + Glass Premium
+   ============================================================================ */
+
+/* ------------------------------
+   LAYOUT GENERAL DEL TICKET
+--------------------------------*/
+.ticket-digital-container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 22px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-soft);
+  animation: fadeInUp 0.35s ease;
+}
+
+.ticket-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.ticket-header h1 {
+  font-size: var(--font-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.ticket-header p {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: var(--font-md);
+}
+
+/* ------------------------------
+   QR SECTION
+--------------------------------*/
+.ticket-qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+  margin: 12px auto 22px auto;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.ticket-qr-img {
+  display: block;
+  border-radius: 10px;
+  image-rendering: crisp-edges;
+}
+
+.ticket-qr-loading,
+.ticket-qr-fallback {
+  text-align: center;
+  font-size: var(--font-md);
+  color: var(--text-muted);
+  padding: 20px;
+}
+
+/* ------------------------------
+   DETALLES DEL PEDIDO
+--------------------------------*/
+.ticket-details {
+  margin-top: 18px;
+  border-top: 1px solid var(--border-soft);
+  padding-top: 18px;
+}
+
+.ticket-details-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: var(--font-md);
+  color: var(--text-main);
+}
+
+.ticket-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-xl);
+  font-weight: var(--weight-bold);
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 2px solid var(--border);
+}
+
+/* ------------------------------
+   ESTADO DEL PEDIDO
+--------------------------------*/
+.ticket-status {
+  margin-top: 24px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-soft);
+  border: 1px solid var(--border-soft);
+  text-align: center;
+  font-size: var(--font-md);
+  color: var(--text-muted);
+}
+
+.ticket-status strong {
+  color: var(--text-main);
+}
+
+/* ------------------------------
+   BOTONES
+--------------------------------*/
+.ticket-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-btn {
+  padding: 12px 20px;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ticket-btn-primary {
+  background: var(--brand-primary);
+  color: white;
+}
+
+.ticket-btn-primary:hover {
+  background: var(--brand-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.ticket-btn-outline {
+  background: transparent;
+  border: 1px solid var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.ticket-btn-outline:hover {
+  background: var(--brand-primary-soft);
+}
+
+/* ------------------------------
+   ANIMACIONES
+--------------------------------*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------
+   IMPRESIÓN
+--------------------------------*/
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .ticket-digital-container {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+
+  .ticket-btn,
+  .ticket-actions {
+    display: none !important;
+  }
+}

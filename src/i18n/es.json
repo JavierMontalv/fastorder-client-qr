@@ -1,0 +1,124 @@
+{
+  "lang": "Español",
+
+  "ui": {
+    "loading": "Cargando...",
+    "close": "Cerrar",
+    "back": "Volver",
+    "see_more": "Ver más",
+    "cancel": "Cancelar",
+    "continue": "Continuar"
+  },
+
+  "home": {
+    "welcome": "Bienvenido",
+    "scan_qr": "Escanea el código QR para ver el menú",
+    "promotions": "Promociones especiales",
+    "popular": "Más pedidos"
+  },
+
+  "menu": {
+    "title": "Menú",
+    "categories": "Categorías",
+    "no_products": "No hay productos disponibles en esta categoría.",
+    "add": "Agregar",
+    "currency": "$"
+  },
+
+  "product": {
+    "details": "Detalles",
+    "ingredients": "Ingredientes",
+    "add_to_cart": "Agregar al carrito",
+    "recommended": "Recomendados para ti",
+    "combine_with": "Combínalo con"
+  },
+
+  "cart": {
+    "title": "Tu pedido",
+    "empty": "Tu carrito está vacío",
+    "quantity": "Cantidad",
+    "total": "Total",
+    "checkout": "Proceder al pago",
+    "remove": "Quitar"
+  },
+
+  "checkout": {
+    "title": "Confirmar Pedido",
+    "your_order": "Tu orden",
+    "type": "Tipo de pedido",
+    "table": "Consumir en mesa",
+    "takeaway": "Para llevar",
+    "payment_method": "Método de pago",
+    "pay_cashier": "Pagar en caja",
+    "pay_now": "Pagar ahora (Nequi / Daviplata / Tarjeta)",
+    "note_optional": "Nota opcional",
+    "note_placeholder": "Ej: Sin cebolla, extra salsa…",
+    "confirm": "Confirmar pedido",
+    "sending": "Procesando pedido…"
+  },
+
+  "takeaway": {
+    "title": "Información para llevar",
+    "pickup_point": "Punto de recogida",
+    "instructions": "Instrucciones",
+    "estimated_time": "Tiempo estimado",
+    "contact": "Contacto del restaurante"
+  },
+
+  "order": {
+    "status_title": "Estado del Pedido",
+    "received": "Pedido recibido",
+    "preparing": "Preparando tu pedido…",
+    "ready": "Tu pedido está listo",
+    "delivered": "Pedido entregado",
+    "timeline_received": "El restaurante recibió tu pedido",
+    "timeline_preparing": "El chef está preparando tu comida",
+    "timeline_ready": "Listo para entregar o recoger",
+    "timeline_delivered": "Disfruta tu comida",
+    "items": "Tu pedido",
+    "total": "Total"
+  },
+
+  "order_progress": {
+    "pending": "Pendiente",
+    "preparation": "Preparación",
+    "ready": "Listo",
+    "delivered": "Entregado"
+  },
+
+  "ticket": {
+    "title": "Ticket Digital",
+    "order_number": "Número de pedido",
+    "table": "Mesa",
+    "takeaway": "Para llevar",
+    "thanks": "¡Gracias por tu compra!",
+    "show_qr": "Mostrar QR",
+    "download": "Descargar recibo"
+  },
+
+  "promo": {
+    "title": "Promoción",
+    "see_promo": "Ver promoción",
+    "limited_time": "Disponible por tiempo limitado",
+    "special_event": "Evento especial",
+    "close_promo": "Entendido"
+  },
+
+  "upsell": {
+    "title": "¿Quieres agregar algo más?",
+    "suggested_for_you": "Sugerido para ti",
+    "add_combo": "Agregar combo",
+    "only": "Solo"
+  },
+
+  "crosssell": {
+    "title": "Perfecto para combinar"
+  },
+
+  "errors": {
+    "network": "Error de conexión",
+    "server": "Servidor no disponible",
+    "unexpected": "Ha ocurrido un error inesperado",
+    "empty": "Sin resultados"
+  }
+}

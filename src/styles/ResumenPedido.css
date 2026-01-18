@@ -1,0 +1,183 @@
+/* ======================================================================
+   📄 ResumenPedido.css — FASTORDER Client QR (Enterprise 2026)
+   ----------------------------------------------------------------------
+   Resumen del pedido SIEMPRE visible (FASE 3)
+   • Mobile-first estricto
+   • Scroll independiente (no rompe BottomSheet)
+   • Controles claros ➕ ➖ 🗑️
+   • UX tipo Shopify / Rappi / Uber Eats
+   • Integración segura con BottomSheets.css
+   ====================================================================== */
+
+@import './Theme.css';
+@import './Colors.css';
+
+/* ======================================================
+   🧾 Contenedor resumen pedido
+   ====================================================== */
+.fo-resumen-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 14px 16px;
+  margin-bottom: 8px;
+
+  border-bottom: 1px solid var(--border-soft);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.94));
+
+  /* Scroll independiente si hay muchos items */
+  max-height: 38vh;
+  overflow-y: auto;
+
+  /* UX suave */
+  overscroll-behavior: contain;
+}
+
+/* Scrollbar limpio (mobile friendly) */
+.fo-resumen-pedido::-webkit-scrollbar {
+  width: 4px;
+}
+
+.fo-resumen-pedido::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+/* ======================================================
+   📦 Item del resumen
+   ====================================================== */
+.fo-resumen-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ======================================================
+   ℹ️ Info del item
+   ====================================================== */
+.fo-resumen-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.fo-resumen-item-nombre {
+  font-size: var(--font-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-main);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fo-resumen-item-precio {
+  font-size: var(--font-sm);
+  font-weight: var(--weight-bold);
+  color: var(--brand-primary);
+}
+
+/* ======================================================
+   🎛️ Controles
+   ====================================================== */
+.fo-resumen-item-controles {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Botones + / - */
+.fo-btn-cantidad {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.fo-btn-cantidad:hover:not(:disabled) {
+  background: var(--brand-primary-soft);
+  border-color: var(--brand-primary);
+}
+
+.fo-btn-cantidad:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Cantidad */
+.fo-resumen-item-cantidad {
+  min-width: 20px;
+  text-align: center;
+
+  font-size: var(--font-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-main);
+}
+
+/* Botón eliminar */
+.fo-btn-eliminar {
+  margin-left: 6px;
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  border: none;
+  background: rgba(239, 68, 68, 0.1);
+
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.fo-btn-eliminar:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: scale(1.05);
+}
+
+/* ======================================================
+   📱 Mobile refinements
+   ====================================================== */
+@media (max-width: 480px) {
+  .fo-resumen-pedido {
+    padding: 12px;
+    gap: 10px;
+    max-height: 42vh;
+  }
+
+  .fo-resumen-item {
+    padding: 10px 12px;
+  }
+
+  .fo-resumen-item-nombre {
+    font-size: 13px;
+  }
+
+  .fo-resumen-item-precio {
+    font-size: 13px;
+  }
+}

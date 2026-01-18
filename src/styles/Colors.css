@@ -1,0 +1,125 @@
+/* ============================================================
+   🎨 FASTORDER — PALETA GLOBAL 2026 (Dark Glass Premium)
+   Compatible con Shopify · Stripe · Linear UI
+   Archivo: src/styles/Colors.css
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   🟦 GRUPO 1 — COLORES DE MARCA
+------------------------------------------------------------ */
+:root {
+  --brand-primary: #3b82f6;           /* Azul principal */
+  --brand-primary-hover: #2563eb;
+  --brand-primary-soft: rgba(59, 130, 246, 0.16);
+  --brand-primary-soft-hover: rgba(59, 130, 246, 0.22);
+  --brand-primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+
+  --brand-accent: #22c55e;           /* Verde éxito */
+  --brand-accent-soft: rgba(34, 197, 94, 0.15);
+}
+
+/* ------------------------------------------------------------
+   🌙 GRUPO 2 — FONDOS (Tema Claro + Sidebar Oscuro Premium)
+------------------------------------------------------------ */
+:root {
+  --bg-body: #f5f7fa;                 /* cuerpo app */
+  --bg-surface: #ffffff;              /* tarjetas */
+  --bg-surface-soft: #f1f5f9;
+  --bg-soft: #eef2f7;
+
+  --bg-hover: rgba(0, 0, 0, 0.04);
+
+  /* Sidebar dark glass */
+  --bg-dark: rgba(8, 15, 30, 0.96);
+  --bg-dark-soft: rgba(12, 20, 40, 0.88);
+  --bg-dark-card: rgba(15, 23, 42, 0.45);
+  --bg-dark-hover: rgba(255, 255, 255, 0.06);
+
+  --gradient-sidebar: linear-gradient(
+    155deg,
+    rgba(6, 12, 25, 0.95) 0%,
+    rgba(10, 18, 35, 0.92) 40%,
+    rgba(12, 20, 42, 0.88) 100%
+  );
+}
+
+/* ------------------------------------------------------------
+   ✏️ GRUPO 3 — TEXTO
+------------------------------------------------------------ */
+:root {
+  --text-main: #0f172a;
+  --text-soft: #334155;
+  --text-muted: #64748b;
+  --text-faint: rgba(0, 0, 0, 0.45);
+
+  --text-light: #e2e8f0;
+  --text-light-soft: #cbd5e1;
+  --text-light-muted: #94a3b8;
+  --text-light-faint: rgba(255, 255, 255, 0.35);
+
+  --text-white-90: rgba(255, 255, 255, 0.9);
+  --text-white-70: rgba(255, 255, 255, 0.7);
+  --text-white-50: rgba(255, 255, 255, 0.5);
+}
+
+/* ------------------------------------------------------------
+   🔔 GRUPO 4 — ESTADOS
+------------------------------------------------------------ */
+:root {
+  --success: #22c55e;
+  --success-soft: rgba(34, 197, 94, 0.15);
+
+  --warning: #eab308;
+  --warning-soft: rgba(234, 179, 8, 0.16);
+
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.15);
+
+  --info: #0ea5e9;
+  --info-soft: rgba(14, 165, 233, 0.15);
+}
+
+/* ------------------------------------------------------------
+   📏 GRUPO 5 — BORDES
+------------------------------------------------------------ */
+:root {
+  --border: #e5e7eb;
+  --border-soft: #f1f5f9;
+  --border-dark: rgba(255, 255, 255, 0.07);
+  --border-dark-strong: rgba(255, 255, 255, 0.18);
+}
+
+/* ------------------------------------------------------------
+   🕶️ GRUPO 6 — SOMBRAS
+------------------------------------------------------------ */
+:root {
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.20);
+  --shadow-card: 0 12px 28px rgba(15, 23, 42, 0.22);
+}
+
+/* ------------------------------------------------------------
+   🧩 GRUPO 7 — RADIOS
+------------------------------------------------------------ */
+:root {
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-pill: 999px;
+}
+
+/* ------------------------------------------------------------
+   🌈 GRUPO 8 — GRADIENTES
+------------------------------------------------------------ */
+:root {
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --gradient-accent: linear-gradient(135deg, #22c55e, #16a34a);
+
+  --gradient-dark: radial-gradient(
+    circle at top left,
+    rgba(15, 23, 42, 0.4) 0%,
+    rgba(2, 6, 23, 0.9) 100%
+  );
+}

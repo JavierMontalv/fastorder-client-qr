@@ -1,0 +1,235 @@
+/* client-qr/src/styles/AITextGenerator.css
+   ======================================================================
+   🤖 AITextGenerator – Estilo Minimal ChatGPT · Glass UI (QR Client)
+   ----------------------------------------------------------------------
+   • Overlay suave tipo modal móvil
+   • Glassmorphism + sombras premium (Stripe / Linear)
+   • Totalmente responsive (QR en restaurante)
+   • Soporta modo oscuro automático
+   ====================================================================== */
+
+/* Overlay de fondo */
+.ai-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.45); /* slate-900/45 */
+  backdrop-filter: blur(10px);
+}
+
+/* Contenedor del modal (bottom sheet estilo móvil) */
+.ai-modal {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 18px;
+  padding: 16px 16px 18px 16px;
+
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Modo claro (por si el body tiene background claro) */
+@media (prefers-color-scheme: light) {
+  .ai-modal {
+    background: rgba(255, 255, 255, 0.98);
+    border-color: rgba(148, 163, 184, 0.45);
+    color: #0f172a;
+  }
+}
+
+/* Header */
+.ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ai-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Botón cerrar */
+.ai-close {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, transform 0.18s ease;
+}
+
+.ai-close:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Textarea */
+.ai-input {
+  width: 100%;
+  resize: none;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 4px;
+
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.6);
+  color: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+
+  outline: none;
+  transition: border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.ai-input::placeholder {
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.ai-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.65);
+  background: rgba(15, 23, 42, 0.85);
+}
+
+@media (prefers-color-scheme: light) {
+  .ai-input {
+    background: rgba(248, 250, 252, 0.96);
+  }
+  .ai-input::placeholder {
+    color: rgba(100, 116, 139, 0.85);
+  }
+}
+
+/* Botón principal */
+.ai-submit {
+  margin-top: 6px;
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 9px 14px;
+
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #f9fafb;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.45);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.1s ease;
+}
+
+.ai-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.6);
+}
+
+.ai-submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+}
+
+.ai-submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* Estado "cargando" */
+.ai-submit.ai-loading {
+  position: relative;
+}
+
+.ai-submit.ai-loading::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(248, 250, 252, 0.75);
+  border-top-color: transparent;
+  animation: ai-spin 0.7s linear infinite;
+}
+
+@keyframes ai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Resultado IA */
+.ai-result {
+  margin-top: 10px;
+  padding: 10px 11px 11px;
+  border-radius: 12px;
+
+  font-size: 13px;
+  line-height: 1.5;
+  max-height: 140px;
+  overflow-y: auto;
+
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  color: #e5e7eb;
+}
+
+/* Scrollbar pequeño dentro de la respuesta */
+.ai-result::-webkit-scrollbar {
+  width: 5px;
+}
+.ai-result::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.65);
+  border-radius: 999px;
+}
+
+@media (prefers-color-scheme: light) {
+  .ai-result {
+    background: rgba(248, 250, 252, 0.98);
+    color: #0f172a;
+  }
+}
+
+/* Responsive: pantallas muy pequeñas */
+@media (max-width: 420px) {
+  .ai-modal {
+    padding: 14px 12px 16px;
+    border-radius: 16px;
+  }
+
+  .ai-title {
+    font-size: 14px;
+  }
+
+  .ai-input {
+    font-size: 12px;
+  }
+
+  .ai-result {
+    font-size: 12px;
+  }
+}

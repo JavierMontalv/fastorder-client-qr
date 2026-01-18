@@ -1,0 +1,92 @@
+/* ======================================================================
+   📦 EstadoPedido.css — FASTORDER QR CLIENT 2026
+   Estados claros · UX calmada · Base para sockets PRO
+   ====================================================================== */
+
+.estado-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+}
+
+.estado-loading {
+  font-size: var(--font-md);
+  color: var(--text-muted);
+}
+
+.estado-title {
+  font-size: var(--font-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-main);
+  margin-bottom: var(--space-xs);
+}
+
+.estado-referencia {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.estado-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+.estado-label {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.estado-valor {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-main);
+  margin-bottom: var(--space-sm);
+}
+
+.estado-tiempo {
+  font-size: var(--font-md);
+  color: var(--text-soft);
+}
+
+.estado-error {
+  color: var(--danger);
+  font-size: var(--font-md);
+  margin: var(--space-md) 0;
+}
+
+.btn-volver,
+.btn-finalizar {
+  margin-top: var(--space-lg);
+  padding: 12px 18px;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-volver {
+  background: var(--bg-soft);
+  color: var(--text-main);
+}
+
+.btn-volver:hover {
+  background: var(--bg-hover);
+}
+
+.btn-finalizar {
+  background: var(--gradient-primary);
+  color: #ffffff;
+}
+
+.btn-finalizar:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
