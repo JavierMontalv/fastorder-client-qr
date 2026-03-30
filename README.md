@@ -1,16 +1,81 @@
-# React + Vite
+# FastOrder Client QR
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend público para escaneo de QR, visualización de menú y creación de pedidos por mesa.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 22 (`.nvmrc`)
+- npm 10+
 
-## React Compiler
+## Variables de entorno
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Usa [`.env.example`](/C:/Users/USER/fastorder-app/client-qr/.env.example) para desarrollo local y [`.env.production.example`](/C:/Users/USER/fastorder-app/client-qr/.env.production.example) para producción.
 
-## Expanding the ESLint configuration
+Claves:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `VITE_API_URL`: base de la API. Acepta `http://host:4000/api` o `/api`.
+- `VITE_ASSETS_URL`: base para imágenes públicas. Déjalo vacío si los assets salen del mismo dominio.
+- `VITE_VAPID_PUBLIC_KEY`: clave pública para push notifications.
+
+## Desarrollo
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Deploy
+
+Este proyecto ya quedó preparado para SPA fallback en:
+
+- Vercel: [`vercel.json`](/C:/Users/USER/fastorder-app/client-qr/vercel.json)
+- Apache: [`public/.htaccess`](/C:/Users/USER/fastorder-app/client-qr/public/.htaccess)
+- Netlify: [`public/_redirects`](/C:/Users/USER/fastorder-app/client-qr/public/_redirects)
+
+### Vercel
+
+Configura:
+
+- Framework preset: `Vite`
+- Build command: `npm run build`
+- Output directory: `dist`
+- Root directory: repo root
+
+Variables recomendadas en producción:
+
+```env
+VITE_API_URL=/api
+VITE_ASSETS_URL=
+VITE_VAPID_PUBLIC_KEY=
+```
+
+### Ubuntu + Nginx/Apache
+
+1. `npm ci`
+2. `npm run build`
+3. Publica el contenido de `dist/`
+4. Si usas Apache, habilita `mod_rewrite` y `AllowOverride All`
+5. Si usas Nginx, configura fallback SPA a `index.html`
+6. Expón `/api` hacia el backend real con proxy inverso
+
+Ejemplo de bloque Nginx:
+
+```nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+
+location /api/ {
+  proxy_pass http://127.0.0.1:4000/api/;
+  proxy_set_header Host $host;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+```

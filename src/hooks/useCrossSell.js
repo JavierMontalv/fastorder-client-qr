@@ -44,13 +44,11 @@ export default function useCrossSell() {
 
       // 1️⃣ Revisar si ya fue mostrado (evita saturación)
       if (evitarRepetir && yaMostradoRef.current[productoId]) {
-        console.log("🔁 CrossSell omitido (ya mostrado antes para este producto).");
         return;
       }
 
       // 2️⃣ Revisar cache interno
       if (cacheRef.current[productoId]) {
-        console.log("⚡ CrossSell servido desde cache");
         const filtrados = filtrarPorPrecio(cacheRef.current[productoId], minPrecio);
         setSugerencias(filtrados);
         yaMostradoRef.current[productoId] = true;
@@ -68,8 +66,6 @@ export default function useCrossSell() {
 
       setSugerencias(filtrados);
       yaMostradoRef.current[productoId] = true;
-
-      console.log("🤝 CrossSell final:", filtrados);
     } catch (err) {
       console.error("❌ Error en useCrossSell:", err);
       setError(err);

@@ -34,14 +34,12 @@ export default function useUpsell(productoId) {
       // 1️⃣ Ver si ya se mostró este upsell
       const vistos = JSON.parse(localStorage.getItem(KEY_VISTOS) || '[]');
       if (vistos.includes(productoId)) {
-        console.log('⏩ Upsell ya visto para este producto.');
         return;
       }
 
       // 2️⃣ Cooldown: evitar saturar
       const ahora = Date.now();
       if (ahora < cooldownRef.current) {
-        console.log('⏸ Cooldown activo, no mostrar upsell.');
         return;
       }
 

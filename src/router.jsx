@@ -9,6 +9,12 @@
 // • Sin validaciones
 // • Solo captura params (slug / mesa)
 // • Producción-ready (SaaS-grade)
+//
+// 🔧 AJUSTE QUIRÚRGICO (NO URGENTE, PERO CORRECTO):
+// • Se ELIMINA MesaProvider local
+// • Se asume MesaProvider GLOBAL en main.jsx
+// • Se evita duplicación de estado
+// • Arquitectura limpia y consistente
 // ======================================================================
 
 import { Navigate, Route, Routes } from 'react-router-dom';

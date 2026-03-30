@@ -1,101 +1,153 @@
 /* ===================================================================
-   FASTORDER CLIENT QR — UI Enterprise 2026 (Glass Premium)
-   Estilo unificado con Panel Admin
-   Colores: Azul #3b82f6 · Hover #2563eb
+   client-qr/src/styles/Menu.css
+   FASTORDER CLIENT QR — Menu Enterprise 2026
+   • Imágenes de menú en tamaño razonable y proporcional
+   • Cards con toda la info de un menú profesional
+   • Mobile-first, desktop grid 3-4 columnas
 =================================================================== */
 
 @import './Theme.css';
 @import './Colors.css';
 
 /* ========================================================
-   FONDO GLOBAL
+   🧱 LAYOUT ROOT
 ======================================================== */
+
+.menu-layout-root {
+  width: 100%;
+  background: var(--bg-soft);
+}
+
 body {
   background: var(--bg-soft);
   margin: 0;
+  overflow-x: hidden;
 }
 
 /* ========================================================
-   CONTENEDOR PRINCIPAL
+   🔥 CONTENEDOR PRINCIPAL
 ======================================================== */
-.menu-container {
-  padding: 80px 20px 40px;
-  max-width: 1100px;
-  margin: 0 auto;
+
+.menu-enterprise-wrapper {
+  padding: 80px 20px 100px;
+  width: 100%;
   font-family: var(--font-family);
   color: var(--text-main);
 }
 
-/* ========================================================
-   TÍTULO
-======================================================== */
-.menu-title {
-  font-size: var(--font-3xl);
-  font-weight: var(--weight-bold);
-  text-align: center;
-  color: var(--text-main);
-  margin-bottom: 6px;
+@media (min-width: 768px) {
+  .menu-enterprise-wrapper {
+    padding: 80px 32px 100px;
+  }
 }
 
-.menu-subtitle {
-  text-align: center;
-  font-size: var(--font-md);
-  color: var(--text-soft);
-  margin-bottom: 26px;
+@media (min-width: 1024px) {
+  .menu-enterprise-wrapper {
+    padding: 80px 48px 100px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
 }
 
 /* ========================================================
-   CATEGORÍAS — TABS PREMIUM (Shopify/Rappi)
+   🍽️ HEADER DEL RESTAURANTE
 ======================================================== */
-.categorias-scroll {
-  display: flex;
-  overflow-x: auto;
-  gap: 12px;
-  padding: 10px 4px;
+
+.menu-header-enterprise {
+  width: 100%;
   margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-.categorias-scroll::-webkit-scrollbar {
-  display: none;
+.menu-header-enterprise::after {
+  content: '';
+  margin-top: 16px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-soft), transparent);
 }
 
-.categoria-tab {
-  padding: 10px 26px;
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+.menu-header-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+/* ========================================================
+   🏷️ NOMBRE DEL RESTAURANTE
+======================================================== */
+
+.menu-restaurant-name {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
   color: var(--text-main);
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-  box-shadow: var(--shadow-sm);
 }
 
-.categoria-tab:hover {
-  background: var(--brand-primary-soft);
-}
-
-.categoria-tab.activa {
-  background: var(--brand-primary);
-  color: white;
-  border-color: var(--brand-primary);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+.menu-restaurant-tagline {
+  margin-top: 4px;
+  max-width: 600px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
 }
 
 /* ========================================================
-   GRID PRODUCTOS — Responsive Enterprise
+   🔖 BADGE MESA
 ======================================================== */
-.menu-productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 26px;
+
+.badge-mesa-libre {
+  align-self: flex-start;
+  margin-top: 10px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-soft);
+  color: var(--text-soft);
 }
 
 /* ========================================================
-   CARD PRODUCTO — ENTERPRISE 2026
+   AVISO RESTAURANTE CERRADO
 ======================================================== */
-.producto-card {
+
+.menu-aviso-cerrado {
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ========================================================
+   GRID PRODUCTOS — MOBILE (lista)
+======================================================== */
+
+.menu-productos-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ========================================================
+   CARD PRODUCTO — BASE (mobile: horizontal)
+======================================================== */
+
+.producto-card-enterprise {
   background: var(--bg-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-soft);
@@ -103,146 +155,358 @@ body {
   overflow: hidden;
   transition: var(--transition);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   cursor: pointer;
+  position: relative;
+  min-height: 120px;
 }
 
-.producto-card:hover {
-  transform: translateY(-5px);
+.producto-card-enterprise:hover {
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
+.producto-card-enterprise.agotado {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* ========================================================
-   🔥 IMAGEN CORREGIDA — (aspect-ratio = solución)
+   IMAGEN — MOBILE (cuadrada, lado izquierdo)
+   Tamaño razonable: 130x130 para menú profesional
 ======================================================== */
+
 .producto-img-wrapper {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius-md);
+  width: 130px;
+  min-width: 130px;
+  height: 130px;
+  position: relative;
+  border-radius: 0;
   background: var(--bg-surface-soft);
   overflow: hidden;
+  flex-shrink: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .producto-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.25s ease;
-}
-
-.producto-card:hover .producto-img {
-  transform: scale(1.05);
+  display: block;
 }
 
 /* ========================================================
-   INFO DEL PRODUCTO
+   BADGE AGOTADO
 ======================================================== */
+
+.badge-agotado {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(220, 38, 38, 0.88);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(4px);
+}
+
+/* ========================================================
+   INFO PRODUCTO — BASE
+======================================================== */
+
 .producto-info {
-  padding: 18px;
+  flex: 1;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
-.producto-nombre {
-  font-size: var(--font-lg);
-  font-weight: var(--weight-semibold);
-  color: var(--text-main);
-  margin: 0 0 6px 0;
+.producto-info-top {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
-.producto-precio {
-  font-size: var(--font-lg);
-  font-weight: var(--weight-bold);
-  color: var(--brand-primary-hover);
-  margin-bottom: 14px;
-}
-
-/* ========================================================
-   BOTÓN — ENTERPRISE (Stripe Style)
-======================================================== */
-.btn-add {
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  background: var(--brand-primary);
-  border: none;
-  color: white;
-  font-size: var(--font-md);
-  font-weight: var(--weight-semibold);
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.btn-add:hover {
-  background: var(--brand-primary-hover);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-/* ========================================================
-   🛒 CARRITO FLOTANTE — JERARQUÍA VISUAL CRÍTICA (PRO)
-   • Percepción de pedido activo
-   • Prioridad UX absoluta
-======================================================== */
-.carrito-flotante {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
+.producto-info-bottom {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Nombre */
+.producto-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  color: var(--text-main);
+  margin: 0;
+  /* Máx 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Descripción — info clave del menú */
+.producto-descripcion {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  /* Máx 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Precio */
+.producto-precio {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--brand-primary);
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+/* Botón agregar */
+.producto-info .fo-btn-primary,
+.producto-info .fo-btn {
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.producto-info .fo-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================================
+   💻 DESKTOP — GRID 4 COLUMNAS (verticales)
+======================================================== */
+
+@media (min-width: 1024px) {
+  .menu-productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  /* Card vertical en desktop */
+  .producto-card-enterprise {
+    flex-direction: column;
+    min-height: 340px;
+    height: 100%;
+  }
+
+  /* Imagen más grande en desktop — experiencia de menú real */
+  .producto-img-wrapper {
+    width: 100%;
+    height: 190px;
+    min-width: unset;
+    border-radius: 0;
+  }
+
+  .producto-info {
+    flex: 1;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .producto-info-top {
+    flex: 1;
+  }
+
+  .producto-info-bottom {
+    margin-top: 12px;
+  }
+
+  .producto-nombre {
+    font-size: 15px;
+    -webkit-line-clamp: 2;
+  }
+
+  .producto-descripcion {
+    -webkit-line-clamp: 3;
+    margin-top: 4px;
+  }
+}
+
+/* Tablet: 2-3 columnas verticales */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .menu-productos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .producto-card-enterprise {
+    flex-direction: column;
+    min-height: 300px;
+  }
+
+  .producto-img-wrapper {
+    width: 100%;
+    height: 170px;
+    min-width: unset;
+  }
+}
+
+/* ========================================================
+   🛒 CARRITO FLOTANTE
+======================================================== */
+
+.carrito-flotante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
   border-radius: 999px;
   background: var(--brand-primary);
   color: white;
   border: none;
   cursor: pointer;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
   z-index: 50;
+  font-size: 14px;
+  font-weight: 700;
+  transition: var(--transition);
 }
 
 .carrito-flotante:hover {
   background: var(--brand-primary-hover);
-}
-
-.carrito-icono {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.carrito-info {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-  text-align: left;
-}
-
-.carrito-items {
-  font-size: var(--font-sm);
-  opacity: 0.9;
-}
-
-.carrito-total {
-  font-size: var(--font-md);
-  font-weight: var(--weight-bold);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
 }
 
 /* ========================================================
-   MOBILE — Optimizado
+   SKELETON / LOADING
 ======================================================== */
+
+@keyframes menuShimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.menu-skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.skeleton {
+  pointer-events: none;
+}
+
+.skeleton-box {
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 25%,
+    #e2e8f0 50%,
+    #f1f5f9 75%
+  );
+  background-size: 800px 100%;
+  animation: menuShimmer 1.4s infinite linear;
+}
+
+.skeleton-line {
+  height: 14px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 25%,
+    #e2e8f0 50%,
+    #f1f5f9 75%
+  );
+  background-size: 800px 100%;
+  animation: menuShimmer 1.4s infinite linear;
+  width: 100%;
+}
+
+.skeleton-line.short {
+  width: 55%;
+}
+
+/* ========================================================
+   ESTADOS VACÍO / ERROR
+======================================================== */
+
+.menu-error,
+.menu-empty {
+  text-align: center;
+  padding: 48px 24px;
+  font-size: 15px;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border);
+  margin-top: 16px;
+}
+
+.menu-error {
+  color: var(--danger);
+  border-color: rgba(220, 38, 38, 0.25);
+  background: var(--danger-soft);
+}
+
+/* ========================================================
+   ANIMACIÓN FADE-IN (cards al cargar)
+======================================================== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.35s ease forwards;
+}
+
+/* ========================================================
+   MOBILE — AJUSTES FINOS
+======================================================== */
+
 @media (max-width: 500px) {
-  .menu-container {
-    padding-top: 60px;
+  .menu-enterprise-wrapper {
+    padding: 70px 16px 90px;
   }
 
-  .menu-productos {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  .producto-img-wrapper {
+    width: 110px;
+    min-width: 110px;
+    height: 110px;
   }
 
   .carrito-flotante {
-    bottom: 12px;
-    right: 12px;
-    padding: 12px 16px;
+    bottom: 14px;
+    right: 14px;
+    padding: 11px 16px;
+    font-size: 13px;
   }
 }

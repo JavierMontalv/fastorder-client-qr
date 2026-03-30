@@ -73,8 +73,6 @@ export async function obtenerPromociones(restauranteId = 1) {
 
     const promos = Array.isArray(json.data) ? json.data : [];
 
-    console.log(`🎉 Promociones activas (${promos.length}) para restaurante ${restauranteId}`);
-
     return promos;
   } catch (error) {
     console.error('❌ Error obteniendo promociones:', error);
@@ -100,7 +98,6 @@ export async function registrarImpresion(id) {
       }
     });
 
-    console.log(`📊 Impresión registrada para promoción ${id}`);
   } catch (error) {
     console.error('❌ Error registrando impresión:', error);
   }

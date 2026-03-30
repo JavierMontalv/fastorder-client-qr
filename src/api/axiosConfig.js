@@ -1,8 +1,9 @@
 // client-qr/src/api/axiosConfig.js
 import axios from 'axios';
+import { API_BASE_URL } from '../config/env';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'

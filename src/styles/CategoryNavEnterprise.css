@@ -1,0 +1,102 @@
+/* client-qr/src/styles/CategoryNavEnterprise.css */
+
+/* =========================================================
+   🔥 CATEGORY NAV — ESTILO FUEGO BURGER (REAL)
+   Full width · Fondo oscuro · Texto plano · Línea activa
+========================================================= */
+
+/*
+  Full-bleed component
+  Rompe el layout padding por diseño editorial
+*/
+
+.category-nav-enterprise {
+  width: 100vw; /* 🔥 viewport real */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+
+  background: #f12954;
+  border-bottom: 2px solid #2b2d30;
+}
+
+/* =========================================================
+   CONTENEDOR INTERNO — FLUJO NATURAL (CLAVE)
+========================================================= */
+.category-nav-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  gap: 48px; /* 🔥 separación real tipo Fuego Burger */
+
+  padding: 0 32px;
+  height: 56px;
+
+  overflow-x: auto; /* ✅ scroll también en desktop */
+  scrollbar-width: none; /* Firefox */
+}
+
+.category-nav-inner::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* =========================================================
+   ITEM — TEXTO PLANO (NO PILLS)
+========================================================= */
+.category-nav-item {
+  background: transparent;
+  border: none;
+
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+
+  padding: 0;
+  height: 100%;
+
+  cursor: pointer;
+  position: relative;
+  opacity: 0.85;
+
+  transition: opacity 0.2s ease;
+}
+
+/* Hover */
+.category-nav-item:hover {
+  opacity: 1;
+}
+
+/* Activo */
+.category-nav-item.active {
+  opacity: 1;
+}
+
+/* =========================================================
+   🔴 INDICADOR ACTIVO — LÍNEA INFERIOR
+========================================================= */
+.category-nav-item.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+
+  height: 3px;
+  background: #e10600; /* rojo fuego */
+}
+
+/* =========================================================
+   📱 MOBILE — AJUSTE FINO
+========================================================= */
+@media (max-width: 768px) {
+  .category-nav-inner {
+    gap: 24px;
+  }
+
+  .category-nav-item {
+    white-space: nowrap;
+  }
+}

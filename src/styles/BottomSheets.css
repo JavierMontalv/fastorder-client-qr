@@ -1,3 +1,4 @@
+/* client-qr/src/styles/BottomSheets.css */
 /* ======================================================================
    📱 FASTORDER QR – BottomSheets.css (Enterprise 2026)
    ----------------------------------------------------------------------
@@ -28,20 +29,20 @@
 
 /* ================================
    ⬆️ Bottom Sheet base
+   🔥 ÚNICA FUENTE DE VERDAD PARA ALTURA
 ================================ */
 .fo-bottomsheet {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  max-height: 92vh;
+  max-height: 85vh; /* ✅ autoridad única */
   background: #fff;
   border-radius: 20px 20px 0 0;
   z-index: 50;
   display: flex;
   flex-direction: column;
   box-shadow: 0 -18px 40px rgba(0, 0, 0, 0.25);
-
   animation: sheet-up 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
@@ -82,11 +83,12 @@
 }
 
 /* ================================
-   📦 Content scroll
+   📦 Content container (NO SCROLL)
+   🔴 Regla de oro: el sheet NO scrollea
 ================================ */
 .fo-bottomsheet-content {
-  overflow-y: auto;
-  padding-bottom: env(safe-area-inset-bottom);
+  overflow: hidden; /* ❗️ NO scroll aquí */
+  padding-bottom: 0; /* ❗️ elimina empuje fantasma */
 }
 
 /* ================================
@@ -96,9 +98,7 @@
   max-height: 60vh;
 }
 
-.fo-bottomsheet.snap-full {
-  max-height: 92vh;
-}
+/* ⚠️ snap-full eliminado: una sola autoridad */
 
 /* ================================
    ⚡ CTA fijo inferior

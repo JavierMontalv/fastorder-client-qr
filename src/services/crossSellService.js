@@ -74,12 +74,6 @@ export async function obtenerCrossSell(productoId) {
 
     const sugerencias = Array.isArray(data.data) ? data.data : [];
 
-    console.log(
-      `🤝 Cross-selling cargado para producto ${productoId}:`,
-      sugerencias.length,
-      "sugerencias"
-    );
-
     return sugerencias;
   } catch (error) {
     console.error("❌ Error obteniendo cross-selling:", error);

@@ -10,6 +10,7 @@ import App from './App';
 
 // Estado global tipo Shopify POS
 import CarritoProvider from './context/CarritoContext';
+import { MesaProvider } from './context/MesaContext';
 import PedidoProvider from './context/PedidoContext';
 
 // =======================================================
@@ -25,11 +26,13 @@ import './styles/Theme.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <PedidoProvider>
-        <CarritoProvider>
-          <App />
-        </CarritoProvider>
-      </PedidoProvider>
+      <MesaProvider>
+        <PedidoProvider>
+          <CarritoProvider>
+            <App />
+          </CarritoProvider>
+        </PedidoProvider>
+      </MesaProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

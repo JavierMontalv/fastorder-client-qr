@@ -9,12 +9,13 @@
 // ======================================================================
 
 import axios from 'axios';
+import { API_BASE_URL } from '../config/env';
 
 // ----------------------------------------------------------------------
 // 🔗 Instancia API principal
 // ----------------------------------------------------------------------
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
+  baseURL: API_BASE_URL,
   timeout: 15000, // QR necesita más tolerancia por redes lentas
   headers: {
     'Content-Type': 'application/json'

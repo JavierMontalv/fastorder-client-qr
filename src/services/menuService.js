@@ -1,3 +1,4 @@
+// client-qr/src/services/menuService.js
 // ======================================================================
 // 🍽️ Menu Service — FASTORDER Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
@@ -40,7 +41,6 @@ export async function obtenerMenuPublicoPorSlug(slug) {
     const restaurante = data.data.restaurante ?? null;
     const categoriasRaw = asegurarArray(data.data.categorias);
 
-    // Normalización SEGURA de categorías + productos
     const categorias = categoriasRaw.map((categoria) => ({
       id: categoria.id ?? null,
       nombre: categoria.nombre ?? '',
@@ -81,8 +81,6 @@ export async function obtenerMenuPublicoPorSlug(slug) {
 
 // ======================================================
 // 🧩 Alias de compatibilidad (TRANSICIÓN CONTROLADA)
-// ------------------------------------------------------
-// Permite actualizar vistas sin romper imports
 // ======================================================
 export async function obtenerMenuPublico(slug) {
   return obtenerMenuPublicoPorSlug(slug);
