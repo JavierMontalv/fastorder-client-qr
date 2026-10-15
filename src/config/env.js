@@ -1,5 +1,8 @@
-const FALLBACK_API_BASE_URL = '/api';
-const FALLBACK_ASSETS_BASE_URL = '';
+const PRODUCTION_API_ORIGIN = 'https://api.somoscomanda.com';
+const FALLBACK_API_BASE_URL = import.meta.env.PROD
+  ? `${PRODUCTION_API_ORIGIN}/api`
+  : '/api';
+const FALLBACK_ASSETS_BASE_URL = import.meta.env.PROD ? PRODUCTION_API_ORIGIN : '';
 
 function normalizeBaseUrl(value, fallback) {
   const normalized = `${value ?? ''}`.trim();
@@ -12,7 +15,7 @@ function stripApiSuffix(value) {
 }
 
 export const API_BASE_URL = normalizeBaseUrl(
-  import.meta.env.VITE_API_URL,
+  import.meta.env.PROD ? FALLBACK_API_BASE_URL : import.meta.env.VITE_API_URL,
   FALLBACK_API_BASE_URL
 );
 

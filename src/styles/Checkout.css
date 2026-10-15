@@ -1,97 +1,274 @@
 /* ======================================================================
-   💳 Checkout.css — FASTORDER QR CLIENT 2026
-   Usa Theme.css + Colors.css (design tokens oficiales)
+   💳 Checkout.css — COMANDA QR CLIENT — Premium 2026
    ====================================================================== */
 
+@import './Theme.css';
+
+/* =============================================
+   CONTENEDOR PRINCIPAL
+============================================= */
 .checkout-container {
   max-width: 520px;
   margin: 0 auto;
-  padding: var(--space-lg);
+  padding: 24px 16px 100px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(241, 41, 84, 0.08), transparent 22%),
+    transparent;
 }
 
+/* =============================================
+   ENCABEZADO
+============================================= */
+.checkout-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 8px 2px 0;
+}
+
+.checkout-back {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-main);
+  font-size: 18px;
+  transition: background var(--transition);
+  flex-shrink: 0;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.checkout-back:hover { background: var(--bg-soft); }
+
 .checkout-title {
-  font-size: var(--font-xl);
-  font-weight: var(--weight-bold);
-  text-align: center;
-  margin-bottom: var(--space-lg);
+  font-size: var(--font-2xl);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.5px;
   color: var(--text-main);
 }
 
+/* =============================================
+   CARD ORDEN
+============================================= */
 .checkout-card {
-  background: var(--bg-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: var(--space-lg);
+  background:
+    radial-gradient(circle at top right, rgba(241, 41, 84, 0.06), transparent 24%),
+    rgba(255, 255, 255, 0.92);
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.82);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  margin-bottom: 16px;
+  backdrop-filter: blur(16px);
+}
+
+.checkout-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.checkout-items-list {
+  padding: 4px 0;
 }
 
 .checkout-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
   font-size: var(--font-md);
   color: var(--text-main);
-  margin-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.78);
+  gap: 12px;
+}
+
+.checkout-item:last-child { border-bottom: none; }
+
+.checkout-item-name {
+  flex: 1;
+  font-weight: var(--weight-medium);
+}
+
+.checkout-item-price {
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  color: var(--text-soft);
+}
+
+/* Totales */
+.checkout-totals {
+  padding: 12px 20px 16px;
+  border-top: 1px solid rgba(226, 232, 240, 0.78);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .checkout-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--space-sm);
   font-size: var(--font-md);
-  color: var(--text-soft);
+  color: var(--text-muted);
 }
 
 .checkout-line input {
-  width: 96px;
-  padding: 6px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  width: 100px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
   background: var(--bg-surface-soft);
   color: var(--text-main);
   font-size: var(--font-md);
+  font-family: var(--font-family);
   text-align: right;
-  transition: var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
 }
 
 .checkout-line input:focus {
   border-color: var(--brand-primary);
   box-shadow: 0 0 0 3px var(--brand-primary-soft);
-  outline: none;
-  background: #ffffff;
+  background: #fff;
 }
 
 .checkout-total {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--space-md);
-  font-size: var(--font-lg);
-  font-weight: var(--weight-bold);
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+  font-size: var(--font-xl);
+  font-weight: var(--weight-extrabold);
   color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+/* =============================================
+   NOTA / INSTRUCCIONES
+============================================= */
+.checkout-nota-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.checkout-nota {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1.5px solid var(--border);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text-main);
+  font-size: var(--font-md);
+  font-family: var(--font-family);
+  resize: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+
+.checkout-nota:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--brand-primary-soft);
+}
+
+.checkout-nota::placeholder { color: var(--text-placeholder); }
+
+/* =============================================
+   BOTÓN CONFIRMAR (FIJO INFERIOR)
+============================================= */
+.checkout-sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(255,255,255,0.96) 72%, rgba(255,255,255,0.76) 100%);
+  border-top: 1px solid rgba(226, 232, 240, 0.76);
+  z-index: 20;
+  backdrop-filter: blur(20px);
 }
 
 .checkout-button {
   width: 100%;
-  padding: 14px;
-  font-size: var(--font-md);
-  font-weight: var(--weight-semibold);
-  border-radius: var(--radius-md);
+  padding: 15px;
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-family);
+  border-radius: 20px;
   border: none;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, #ff5f83 0%, #f12954 55%, #d4173f 100%);
   color: #ffffff;
   cursor: pointer;
-  transition: var(--transition);
+  box-shadow: var(--shadow-brand);
+  transition: background var(--transition), transform var(--transition-fast),
+    box-shadow var(--transition);
+  letter-spacing: -0.2px;
 }
 
 .checkout-button:hover:not(:disabled) {
+  background: var(--brand-primary-hover);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-brand), 0 8px 24px rgba(0,0,0,0.10);
+}
+
+.checkout-button:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: none;
 }
 
 .checkout-button:disabled {
-  opacity: 0.6;
+  opacity: 0.50;
   cursor: not-allowed;
-  transform: none;
   box-shadow: none;
+}
+
+/* =============================================
+   TIPO PEDIDO (TABS)
+============================================= */
+.checkout-tipo-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.checkout-tipo-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--text-muted);
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition),
+    color var(--transition);
+  text-align: center;
+}
+
+.checkout-tipo-btn.active {
+  border-color: var(--brand-primary);
+  background: var(--brand-primary-soft);
+  color: var(--brand-primary);
+}
+
+.checkout-tipo-btn:hover:not(.active) {
+  border-color: var(--border-medium);
+  background: var(--bg-soft);
 }

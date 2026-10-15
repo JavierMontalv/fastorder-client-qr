@@ -1,109 +1,106 @@
-// ============================================================================
-// 🔔 listenPush.js – FASTORDER Client-QR (2026)
-// ----------------------------------------------------------------------------
-// Funciones premium:
-//  • Escucha mensajes enviados por el Service Worker
-//  • Eventos: pedido listo, promo nueva, actualización estado
-//  • Muestra banners internos tipo Rappi / Uber Eats
-//  • Callback opcional para disparar animaciones en React
-// ============================================================================
+import {
+  vibrarCambioEstadoPedido,
+  vibrarLlamadoPedido
+} from '../utils/pedidoHaptics';
 
-// -----------------------------------------------------------
-// 🧠 Hooks de escucha centralizada
-// -----------------------------------------------------------
-export function listenPushMessages(onMessageCallback = null) {
-  if (!('serviceWorker' in navigator)) {
-    console.warn('⚠️ Este navegador NO soporta Service Workers.');
+let escuchandoPushMessages = false;
+let bannerTimeout = null;
+
+function vibrarDesdePayload(payload = {}) {
+  const data = payload.data || payload;
+  const tipo = data.tipo || payload.tipo || payload.type;
+
+  if (tipo === 'llamado') {
+    vibrarLlamadoPedido({
+      pedidoId: data.pedidoId || payload.pedidoId,
+      eventId: data.eventId || payload.eventId || payload.tag,
+      payload
+    });
     return;
   }
 
-  navigator.serviceWorker.ready.then((registration) => {
-    if (!navigator.serviceWorker.controller) {
-      console.warn('⚠️ No hay Service Worker controlando la página aún.');
-      return;
-    }
-
-    console.log('📡 Escuchando mensajes push del Service Worker…');
-
-    // -----------------------------------------------------------
-    // 🔥 Evento: mensaje DIRECTO desde el SW (client.postMessage)
-    // -----------------------------------------------------------
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      const payload = event.data;
-
-      console.log('📩 Mensaje recibido del Service Worker:', payload);
-
-      if (onMessageCallback) {
-        onMessageCallback(payload);
-      }
-
-      mostrarBannerInterno(payload);
-    });
+  vibrarCambioEstadoPedido({
+    pedidoId: data.pedidoId || payload.pedidoId,
+    estadoAnterior: null,
+    estadoNuevo: data.estado || payload.estado || tipo
   });
 }
 
-// ============================================================================
-// 🎨 BANNER INTERNO (UI dentro de la app estilo Uber Eats / Rappi)
-// ============================================================================
-let bannerTimeout = null;
+export function listenPushMessages(onMessageCallback = null) {
+  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) {
+    return;
+  }
 
-export function mostrarBannerInterno(payload) {
+  if (escuchandoPushMessages) return;
+  escuchandoPushMessages = true;
+
+  navigator.serviceWorker.ready.catch(() => {});
+
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const payload = event.data || {};
+
+    vibrarDesdePayload(payload);
+
+    if (onMessageCallback) {
+      onMessageCallback(payload);
+    }
+
+    mostrarBannerInterno(payload);
+  });
+}
+
+export function mostrarBannerInterno(payload = {}) {
   try {
-    const { title, body, type } = payload || {};
+    const { title, body } = payload;
 
-    // Si ya hay uno abierto → cerrarlo
     const prev = document.getElementById('fo-push-banner');
     if (prev) prev.remove();
 
-    // Crear banner
     const banner = document.createElement('div');
     banner.id = 'fo-push-banner';
-
     banner.style.cssText = `
       position: fixed;
-      top: 12px;
+      top: max(12px, env(safe-area-inset-top, 0px));
       left: 50%;
-      transform: translateX(-50%);
-      background: #111;
+      transform: translateX(-50%) translateY(-10px);
+      background: linear-gradient(135deg, #111827, #0f172a);
       color: white;
-      padding: 14px 20px;
-      border-radius: 16px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-family: var(--font-family, system-ui, sans-serif);
       font-size: 15px;
-      font-weight: 600;
-      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      font-weight: 800;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, .28);
       z-index: 999999;
       opacity: 0;
       text-align: center;
-      max-width: 85%;
-      transition: opacity .3s ease, transform .3s ease;
+      width: min(90vw, 420px);
+      transition: opacity .24s ease, transform .24s ease;
+      border: 1px solid rgba(255,255,255,.12);
     `;
 
     banner.innerHTML = `
-      <div>${title || 'Notificación'}</div>
-      <div style="font-size:13px; font-weight:400; opacity:.85; margin-top:3px;">
-        ${body || ''}
+      <div>${title || 'Actualizacion de pedido'}</div>
+      <div style="font-size:13px; font-weight:600; opacity:.84; margin-top:3px; line-height:1.35;">
+        ${body || 'Tu pedido tuvo un cambio importante.'}
       </div>
     `;
 
     document.body.appendChild(banner);
+    vibrarDesdePayload(payload);
 
-    // Mostrar animado
-    setTimeout(() => {
-      banner.style.opacity = 1;
+    window.setTimeout(() => {
+      banner.style.opacity = '1';
       banner.style.transform = 'translateX(-50%) translateY(0)';
     }, 30);
 
-    // Ocultar automáticamente
-    clearTimeout(bannerTimeout);
-    bannerTimeout = setTimeout(() => {
-      banner.style.opacity = 0;
+    window.clearTimeout(bannerTimeout);
+    bannerTimeout = window.setTimeout(() => {
+      banner.style.opacity = '0';
       banner.style.transform = 'translateX(-50%) translateY(-10px)';
-      setTimeout(() => banner.remove(), 300);
-    }, 4200);
-
-    // Vibración sutil si el dispositivo la soporta
-    if (navigator.vibrate) navigator.vibrate([30, 20, 30]);
-  } catch (err) {
-    console.error('❌ Error mostrando banner interno de notificación:', err);
+      window.setTimeout(() => banner.remove(), 300);
+    }, 4800);
+  } catch {
+    // La notificacion del sistema ya cubre el aviso principal.
   }
 }

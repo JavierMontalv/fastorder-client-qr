@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
     "axios": "^1.13.2",
     "framer-motion": "^12.23.26",
+    "jsqr": "^1.4.0",
+    "lucide-react": "^1.17.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-qr-code": "^2.0.18",

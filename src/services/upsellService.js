@@ -1,5 +1,5 @@
 // ======================================================================
-// 🍟 Upsell Service – FASTORDER Client-QR (Enterprise 2026)
+// 🍟 Upsell Service – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Funcionalidades Enterprise:
 //  • Obtener productos sugeridos (upsell) desde el backend
@@ -8,7 +8,9 @@
 //  • Normalización de datos
 // ======================================================================
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { API_BASE_URL } from '../config/env';
+
+const BASE_URL = API_BASE_URL;
 
 if (!BASE_URL) {
   console.error('❌ ERROR: VITE_API_URL no está configurado en el entorno.');
@@ -59,7 +61,7 @@ export async function getUpsell(productoId) {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        'X-FASTORDER-CLIENT': 'QR-2026'
+        'X-COMANDA-CLIENT': 'QR-2026'
       }
     });
 
@@ -89,3 +91,4 @@ export default {
   getUpsell,
   obtenerUpsell
 };
+

@@ -1,6 +1,6 @@
 // client-qr/src/services/pagoService.js
 // ======================================================================
-// 💳 Pago Service (QR Client) – FASTORDER 2026
+// 💳 Pago Service (QR Client) – COMANDA 2026
 // ----------------------------------------------------------------------
 // • SOLO selección de método de pago
 // • NO marca pedido como pagado
@@ -42,3 +42,4 @@ export async function seleccionarMetodoPago(pedidoId, metodoPago) {
 export default {
   seleccionarMetodoPago
 };
+

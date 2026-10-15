@@ -1,5 +1,5 @@
 // ======================================================================
-// 🏪 HeaderRestaurante.jsx – FASTORDER QR Client (Enterprise 2026)
+// 🏪 HeaderRestaurante.jsx – COMANDA QR Client (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Encabezado premium estilo Rappi / UberEats:
 //
@@ -101,3 +101,4 @@ export default function HeaderRestaurante({ restaurante }) {
     </header>
   );
 }
+

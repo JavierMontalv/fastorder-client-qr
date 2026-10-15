@@ -1,4 +1,4 @@
-# FastOrder Client QR
+# Comanda Client QR
 
 Frontend público para escaneo de QR, visualización de menú y creación de pedidos por mesa.
 
@@ -9,7 +9,7 @@ Frontend público para escaneo de QR, visualización de menú y creación de ped
 
 ## Variables de entorno
 
-Usa [`.env.example`](/C:/Users/USER/fastorder-app/client-qr/.env.example) para desarrollo local y [`.env.production.example`](/C:/Users/USER/fastorder-app/client-qr/.env.production.example) para producción.
+Usa [`.env.example`](/C:/Users/USER/comanda-app/client-qr/.env.example) para desarrollo local y [`.env.production.example`](/C:/Users/USER/comanda-app/client-qr/.env.production.example) para producción.
 
 Claves:
 
@@ -35,9 +35,9 @@ npm run preview
 
 Este proyecto ya quedó preparado para SPA fallback en:
 
-- Vercel: [`vercel.json`](/C:/Users/USER/fastorder-app/client-qr/vercel.json)
-- Apache: [`public/.htaccess`](/C:/Users/USER/fastorder-app/client-qr/public/.htaccess)
-- Netlify: [`public/_redirects`](/C:/Users/USER/fastorder-app/client-qr/public/_redirects)
+- Vercel: [`vercel.json`](/C:/Users/USER/comanda-app/client-qr/vercel.json)
+- Apache: [`public/.htaccess`](/C:/Users/USER/comanda-app/client-qr/public/.htaccess)
+- Netlify: [`public/_redirects`](/C:/Users/USER/comanda-app/client-qr/public/_redirects)
 
 ### Vercel
 
@@ -79,3 +79,4 @@ location /api/ {
   proxy_set_header X-Forwarded-Proto $scheme;
 }
 ```
+

@@ -1,6 +1,6 @@
 // client-web/src/hooks/useAdminAI.js
 // ======================================================================
-// 🤖 Hook: IA para Administradores — FASTORDER (Enterprise 2026)
+// 🤖 Hook: IA para Administradores — COMANDA (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Funcionalidades avanzadas:
 //   ✔ Chat estilo ChatGPT dentro del panel admin
@@ -16,11 +16,12 @@
 // ======================================================================
 
 import { useEffect, useRef, useState } from 'react';
+import { API_BASE_URL } from '../config/env';
 
 export default function useAdminAI(restauranteId) {
   const [historial, setHistorial] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('fastorder_ai_chat_admin');
+      const saved = sessionStorage.getItem('comanda_ai_chat_admin');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -36,7 +37,7 @@ export default function useAdminAI(restauranteId) {
   // 🧠 Guardar historial en sessionStorage
   // ======================================================================
   useEffect(() => {
-    sessionStorage.setItem('fastorder_ai_chat_admin', JSON.stringify(historial));
+    sessionStorage.setItem('comanda_ai_chat_admin', JSON.stringify(historial));
   }, [historial]);
 
   // ======================================================================
@@ -66,11 +67,11 @@ export default function useAdminAI(restauranteId) {
     setHistorial(nuevoHistorial);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/ia/chat-admin`, {
+      const res = await fetch(`${API_BASE_URL}/ia/chat-admin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('fastorder_token')
+          Authorization: 'Bearer ' + localStorage.getItem('comanda_token')
         },
         body: JSON.stringify({
           mensaje: texto,
@@ -113,7 +114,7 @@ export default function useAdminAI(restauranteId) {
   // ======================================================================
   const limpiarHistorial = () => {
     setHistorial([]);
-    sessionStorage.removeItem('fastorder_ai_chat_admin');
+    sessionStorage.removeItem('comanda_ai_chat_admin');
   };
 
   return {
@@ -124,3 +125,4 @@ export default function useAdminAI(restauranteId) {
     limpiarHistorial
   };
 }
+

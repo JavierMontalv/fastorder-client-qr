@@ -1,5 +1,5 @@
 // ======================================================================
-// 🧭 router.jsx – FASTORDER QR Client 2026 (Enterprise)
+// 🧭 router.jsx – COMANDA QR Client 2026 (Enterprise)
 // ----------------------------------------------------------------------
 // Router centralizado del cliente QR
 //
@@ -110,3 +110,4 @@ export default function Router() {
     </Routes>
   );
 }
+

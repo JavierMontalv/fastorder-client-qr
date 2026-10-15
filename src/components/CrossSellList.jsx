@@ -1,5 +1,5 @@
 // ======================================================================
-// 🔗 CrossSellList.jsx – FASTORDER Client-QR (Enterprise 2026)
+// 🔗 CrossSellList.jsx – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Sección "Combínalo con..." tipo UberEats/Rappi.
 //
@@ -43,3 +43,4 @@ export default function CrossSellList({ sugerencias = [], onAdd }) {
     </div>
   );
 }
+

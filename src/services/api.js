@@ -1,5 +1,5 @@
 // ======================================================================
-// 🌐 API Axios – FASTORDER QR Client 2026 (Enterprise Edition)
+// 🌐 API Axios – COMANDA QR Client 2026 (Enterprise Edition)
 // ----------------------------------------------------------------------
 // • Optimizado para menú QR sin autenticación obligatoria
 // • Evita enviar "Bearer null" o "Bearer undefined"
@@ -29,14 +29,14 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     try {
-      const token = localStorage.getItem('fastorder_token');
+      const token = localStorage.getItem('comanda_token');
 
       if (token && token !== 'null' && token !== 'undefined') {
         config.headers.Authorization = `Bearer ${token}`;
       }
 
       // Marca quién está consumiendo la API (útil en logs backend)
-      config.headers['x-fastorder-client'] = 'qr-2026';
+      config.headers['x-comanda-client'] = 'qr-2026';
 
       return config;
     } catch (err) {
@@ -76,3 +76,4 @@ api.interceptors.response.use(
 );
 
 export default api;
+

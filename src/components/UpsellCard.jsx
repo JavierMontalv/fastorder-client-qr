@@ -1,5 +1,5 @@
 // ======================================================================
-// 🍟 UpsellCard.jsx – FASTORDER Client-QR (Enterprise 2026)
+// 🍟 UpsellCard.jsx – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Componente visual para sugerencias automáticas de venta adicional:
 //  • Mostrar producto sugerido ("Agrega papas", "Añadir postre")
@@ -46,3 +46,4 @@ export default function UpsellCard({ producto, onAdd }) {
     </div>
   );
 }
+

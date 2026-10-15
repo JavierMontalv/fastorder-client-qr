@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎯 Hook: useUpsell – FASTORDER Client-QR (Enterprise 2026)
+// 🎯 Hook: useUpsell – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Funcionalidades premium:
 //  • Llamar al backend para obtener productos sugeridos
@@ -16,7 +16,7 @@ import { getUpsell } from '../services/upsellService';
 const COOLDOWN = 20_000; // 20 segundos → ajustable
 
 // Clave localStorage para no repetir upsell por plato
-const KEY_VISTOS = 'fastorder_upsell_vistos';
+const KEY_VISTOS = 'comanda_upsell_vistos';
 
 export default function useUpsell(productoId) {
   const [sugerencias, setSugerencias] = useState([]);
@@ -72,3 +72,4 @@ export default function useUpsell(productoId) {
     cerrarUpsell
   };
 }
+

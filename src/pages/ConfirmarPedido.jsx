@@ -1,5 +1,5 @@
 // ===================================================================
-// ✅ ConfirmarPedido.jsx – FASTORDER (Enterprise 2026)
+// ✅ ConfirmarPedido.jsx – COMANDA (Enterprise 2026)
 // -------------------------------------------------------------------
 // Pantalla de confirmación al estilo Uber Eats / Rappi:
 //  • Resumen de items
@@ -11,6 +11,25 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+
+function normalizarModificacionesParaPedido(modificaciones = []) {
+  return (Array.isArray(modificaciones) ? modificaciones : [])
+    .map((grupo) => {
+      const grupoId = Number(grupo?.grupoId || grupo?.grupoModificadorId || grupo?.id || 0);
+      const opciones = Array.isArray(grupo?.opciones)
+        ? grupo.opciones
+            .map((opcion) => {
+              const opcionId = Number(opcion?.opcionId || opcion?.id || opcion || 0);
+              return opcionId ? { opcionId } : null;
+            })
+            .filter(Boolean)
+        : [];
+
+      if (!grupoId || opciones.length === 0) return null;
+      return { grupoId, opciones };
+    })
+    .filter(Boolean);
+}
 
 export default function ConfirmarPedido({
   items = [],
@@ -26,7 +45,10 @@ export default function ConfirmarPedido({
   // 📌 Calcular total del pedido
   // ================================================================
   useEffect(() => {
-    const t = items.reduce((acc, it) => acc + it.precio * it.cantidad, 0);
+    const t = items.reduce(
+      (acc, it) => acc + Number(it.precioUnitario || it.precio || 0) * Number(it.cantidad || 0),
+      0
+    );
     setTotal(t);
   }, [items]);
 
@@ -40,6 +62,8 @@ export default function ConfirmarPedido({
       items: items.map((i) => ({
         productoId: i.id,
         cantidad: i.cantidad,
+        modificaciones: normalizarModificacionesParaPedido(i.modificaciones),
+        instrucciones: String(i.instrucciones || '').trim(),
       })),
     };
 
@@ -105,11 +129,13 @@ export default function ConfirmarPedido({
               <p className="font-medium text-gray-900">
                 {item.nombre} × {item.cantidad}
               </p>
-              <p className="text-gray-500 text-sm">${item.precio.toLocaleString()}</p>
+              <p className="text-gray-500 text-sm">
+                ${Number(item.precioUnitario || item.precio || 0).toLocaleString()}
+              </p>
             </div>
 
             <p className="font-semibold text-gray-900">
-              ${(item.precio * item.cantidad).toLocaleString()}
+              ${(Number(item.precioUnitario || item.precio || 0) * Number(item.cantidad || 0)).toLocaleString()}
             </p>
           </div>
         ))}
@@ -144,3 +170,4 @@ export default function ConfirmarPedido({
     </motion.div>
   );
 }
+

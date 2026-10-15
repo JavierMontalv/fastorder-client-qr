@@ -1,5 +1,5 @@
 // ======================================================================
-// 📦 TakeawayInfo.jsx – FASTORDER Client-QR (Enterprise 2026)
+// 📦 TakeawayInfo.jsx – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Componente premium para pedidos "Para llevar":
 //  • Muestra tiempo estimado configurado por el restaurante
@@ -43,3 +43,4 @@ export default function TakeawayInfo({ tiempo, puntoRecogida, instrucciones }) {
     </div>
   );
 }
+

@@ -1,103 +1,58 @@
-// client-qr/src/components/CarritoFlotante.jsx
-// ======================================================
-// 🛒 Botón flotante de carrito – FASTORDER Client QR 2026
-// ------------------------------------------------------
-// • Muestra total de ítems + total en dinero
-// • Fijo en esquina inferior derecha
-// • Animado (aparición + reacción a cambios + salida)
-// • Badge animado (dopamina pura)
-// • NO cambia lógica de negocio
-// • NO cambia API del contexto
-// • AJUSTE PRO FINAL: salida animada elegante (AnimatePresence)
-// ======================================================
-
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
+
+import { buildAssetUrl } from '../config/env';
 import { useCarrito } from '../context/CarritoContext';
 import '../styles/Menu.css';
-import CarritoBadge from './carrito/CarritoBadge';
 
 function formatearPrecio(valor) {
-  try {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0
-    }).format(valor || 0);
-  } catch {
-    return `$ ${valor ?? 0}`;
-  }
+  return `$${Number(valor || 0).toLocaleString('es-CO', { maximumFractionDigits: 0 })}`;
 }
 
-export default function CarritoFlotante({ onClick }) {
-  const { total, totalItems } = useCarrito();
+function resolveProductoImg(imagenUrl) {
+  if (!imagenUrl) return null;
+  if (/^https?:\/\//i.test(imagenUrl)) return imagenUrl.replace(/^http:\/\//i, 'https://');
+  const path = imagenUrl.includes('/') ? imagenUrl : `/uploads/productos/${imagenUrl}`;
+  return buildAssetUrl(path);
+}
 
-  // ======================================================
-  // 👁️ Visibilidad derivada (NO lógica nueva)
-  // ======================================================
-  const visible = useMemo(() => totalItems > 0, [totalItems]);
+export default function CarritoFlotante({ onClick, hidden = false }) {
+  const MotionButton = motion.button;
+  const { items, total, totalItems } = useCarrito();
+  const visible = useMemo(() => totalItems > 0 && !hidden, [totalItems, hidden]);
+  const primerProducto = items[0] || null;
+  const imagenProducto = resolveProductoImg(primerProducto?.imagenUrl || primerProducto?.imagen);
 
-  // ======================================================
-  // 💓 Pulso reactivo (UX tipo UberEats)
-  // ------------------------------------------------------
-  // • Primer item: solo animación de aparición
-  // • Ítems siguientes: pulse corto
-  // ======================================================
-  const prevItems = useRef(0);
-  const [pulse, setPulse] = useState(false);
-
-  useEffect(() => {
-    if (prevItems.current === 0 && totalItems > 0) {
-      prevItems.current = totalItems;
-      return;
-    }
-
-    if (totalItems !== prevItems.current) {
-      setPulse(true);
-      const t = setTimeout(() => setPulse(false), 300);
-      prevItems.current = totalItems;
-      return () => clearTimeout(t);
-    }
-  }, [totalItems]);
-
-  // ======================================================
-  // 🎨 Render animado (entrada + salida)
-  // ======================================================
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.button
+      {visible ? (
+        <MotionButton
           key="carrito-flotante"
           type="button"
           onClick={onClick}
           className="carrito-flotante"
-          initial={{ opacity: 0, y: 40, scale: 0.9 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: pulse ? 1.06 : 1
-          }}
-          exit={{ opacity: 0, y: 40, scale: 0.9 }}
-          transition={{
-            type: 'spring',
-            stiffness: 260,
-            damping: 18
-          }}
-          whileTap={{ scale: 0.95 }}
+          aria-label={`Ir a canasta. ${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}, ${formatearPrecio(total)}`}
+          initial={{ opacity: 0, y: 96 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 96 }}
+          transition={{ type: 'spring', stiffness: 330, damping: 30, mass: 0.8 }}
+          whileTap={{ scale: 0.99 }}
         >
-          {/* ================= ICONO + BADGE ================= */}
-          <div className="carrito-icono" style={{ position: 'relative' }}>
-            🛒
-            <CarritoBadge value={totalItems} />
-          </div>
+          <span className="carrito-preview">
+            {imagenProducto ? <img src={imagenProducto} alt="" /> : <span aria-hidden="true">CM</span>}
+            <strong>{totalItems}</strong>
+          </span>
 
-          {/* ================= INFO ================= */}
-          <div className="carrito-info">
-            <span className="carrito-items">{totalItems} ítem(s)</span>
+          <span className="carrito-info">
+            <span className="carrito-items">
+              {totalItems} {totalItems === 1 ? 'producto' : 'productos'}
+            </span>
             <span className="carrito-total">{formatearPrecio(total)}</span>
-          </div>
-        </motion.button>
-      )}
+          </span>
+
+          <span className="carrito-cta" aria-hidden="true">Ir a canasta</span>
+        </MotionButton>
+      ) : null}
     </AnimatePresence>
   );
 }

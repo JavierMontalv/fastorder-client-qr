@@ -1,7 +1,7 @@
 // ======================================================================
 // 🔢 client-qr/src/components/carrito/CarritoBadge.jsx
 // ----------------------------------------------------------------------
-// FASTORDER Client QR 2026 — UX Dopamina Pura
+// COMANDA Client QR 2026 — UX Dopamina Pura
 // ----------------------------------------------------------------------
 // Responsabilidad ÚNICA:
 // • Mostrar número de ítems
@@ -67,3 +67,4 @@ export default function CarritoBadge({ value }) {
     </motion.span>
   );
 }
+

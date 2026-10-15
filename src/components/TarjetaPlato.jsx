@@ -1,6 +1,6 @@
 // client-qr/src/components/TarjetaPlato.jsx
 // ===================================================================
-// 🍽️ TarjetaPlato.jsx – FASTORDER (Enterprise 2026)
+// 🍽️ TarjetaPlato.jsx – COMANDA (Enterprise 2026)
 // -------------------------------------------------------------------
 // ✅ CORRECCIÓN QUIRÚRGICA FASE 1.3
 // • Bloqueo real de compra por stock
@@ -85,3 +85,4 @@ export default function TarjetaPlato({ plato, onAgregar }) {
     </div>
   );
 }
+

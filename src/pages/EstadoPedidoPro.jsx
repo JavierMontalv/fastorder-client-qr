@@ -1,5 +1,5 @@
 // ======================================================================
-// 📦 EstadoPedidoPro.jsx – FASTORDER QR Client 2026 (Enterprise Edition)
+// 📦 EstadoPedidoPro.jsx – COMANDA QR Client 2026 (Enterprise Edition)
 // ======================================================================
 
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { llamarMesero } from '../services/pedidosService';
 
 import '../styles/EstadoPedidoPro.css';
 
-// Estados estándar FASTORDER
+// Estados estándar COMANDA
 const MAP_ESTADOS = {
   recibido: 'Pedido recibido',
   preparando: 'Preparando tu pedido',
@@ -98,3 +98,4 @@ export default function EstadoPedidoPro() {
     </div>
   );
 }
+

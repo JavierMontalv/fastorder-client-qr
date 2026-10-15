@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎉 usePromocionPopup – Hook de Promociones FASTORDER (2026)
+// 🎉 usePromocionPopup – Hook de Promociones COMANDA (2026)
 // ----------------------------------------------------------------------
 // Este hook controla la lógica completa del popup de promociones:
 //   • Cargar promociones activas del backend
@@ -21,7 +21,7 @@ import {
   registrarImpresion
 } from '../services/promocionesService';
 
-const STORAGE_KEY = 'fastorder_promo_mostrada';
+const STORAGE_KEY = 'comanda_promo_mostrada';
 
 // ======================================================================
 // 🧠 Hook Principal
@@ -38,13 +38,6 @@ export default function usePromocionPopup(restauranteId = 1) {
     const init = async () => {
       try {
         setCargando(true);
-
-        // Si ya la vio durante la sesión → no mostrar
-        const yaMostrada = sessionStorage.getItem(STORAGE_KEY);
-        if (yaMostrada) {
-          setCargando(false);
-          return;
-        }
 
         // 1️⃣ Obtener promociones activas
         const promos = await obtenerPromociones(restauranteId);
@@ -78,7 +71,6 @@ export default function usePromocionPopup(restauranteId = 1) {
   // ====================================================================
   function cerrarPopup() {
     setVisible(false);
-    sessionStorage.setItem(STORAGE_KEY, '1');
   }
 
   // ====================================================================
@@ -102,3 +94,4 @@ export default function usePromocionPopup(restauranteId = 1) {
     clickPromo
   };
 }
+

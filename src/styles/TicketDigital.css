@@ -1,5 +1,5 @@
 /* ============================================================================
-   🎫 FASTORDER – TICKET DIGITAL (Enterprise 2026)
+   🎫 COMANDA – TICKET DIGITAL (Enterprise 2026)
    Archivo: client-qr/src/styles/TicketDigital.css
    Estilo: Stripe Terminal + Rappi + Glass Premium
    ============================================================================ */
@@ -184,3 +184,4 @@
     display: none !important;
   }
 }
+

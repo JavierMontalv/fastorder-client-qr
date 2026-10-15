@@ -1,6 +1,6 @@
 // client-qr/src/hooks/useProductosPublicos.js
 // ======================================================================
-// 🍽️ Hook: Productos Públicos — FASTORDER Client QR (Enterprise 2026)
+// 🍽️ Hook: Productos Públicos — COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // • Fuente ÚNICA: /api/productos/public
 // • Normalización cerrada
@@ -44,3 +44,4 @@ export default function useProductosPublicos(restauranteId, categoriaId = null) 
     error
   };
 }
+

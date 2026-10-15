@@ -1,5 +1,5 @@
 // ======================================================================
-// 🧾 TicketDigital.jsx – FASTORDER QR Client (Enterprise 2026)
+// 🧾 TicketDigital.jsx – COMANDA QR Client (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Pantalla que se muestra tras crear el pedido:
 //  • Ticket visual tipo recibo digital
@@ -12,6 +12,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
+import { API_BASE_URL } from "../config/env";
 import "../styles/TicketDigital.css";
 
 export default function TicketDigital() {
@@ -41,7 +42,7 @@ export default function TicketDigital() {
   useEffect(() => {
     const generarQR = async () => {
       try {
-        const qr = await QRCode.toDataURL(`fastorder-pedido:${pedidoId}`);
+        const qr = await QRCode.toDataURL(`comanda-pedido:${pedidoId}`);
         setQrDataURL(qr);
       } catch (err) {
         console.error("❌ Error generando QR:", err);
@@ -58,7 +59,7 @@ export default function TicketDigital() {
     const fetchTicket = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/pedidos/${pedidoId}/ticket`
+          `${API_BASE_URL}/pedidos/${pedidoId}/ticket`
         );
 
         const data = await res.json();
@@ -152,3 +153,4 @@ export default function TicketDigital() {
     </div>
   );
 }
+

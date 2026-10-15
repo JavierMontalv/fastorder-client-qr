@@ -1,6 +1,6 @@
 // client-qr/src/components/AITextGenerator.jsx
 // ======================================================================
-// 🤖 AITextGenerator – FASTORDER QR CLIENT (2026)
+// 🤖 AITextGenerator – COMANDA QR CLIENT (2026)
 // ----------------------------------------------------------------------
 // Componente elegante para generar textos con IA:
 //   • Popup moderno tipo ChatGPT mini
@@ -115,3 +115,4 @@ export default function AITextGenerator({ abierto = false, onCerrar, onGenerar }
     </AnimatePresence>
   );
 }
+

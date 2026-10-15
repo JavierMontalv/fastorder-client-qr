@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎫 TicketQR.jsx – FASTORDER Client-QR (Enterprise 2026)
+// 🎫 TicketQR.jsx – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Componente reusable para mostrar un código QR premium:
 //  • Estilo glass UI
@@ -80,3 +80,4 @@ TicketQR.propTypes = {
   value: PropTypes.string.isRequired,
   size: PropTypes.number,
 };
+

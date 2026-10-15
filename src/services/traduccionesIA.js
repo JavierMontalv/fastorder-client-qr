@@ -1,6 +1,6 @@
 // client-qr/src/services/traduccionesIA.js
 // ======================================================================
-// 🌍 Traducciones IA — FASTORDER CLIENT QR 2026
+// 🌍 Traducciones IA — COMANDA CLIENT QR 2026
 // Traducción automática de menú sin duplicar productos
 // Multi-idioma · Escalable · Internacionalización real
 // ======================================================================
@@ -40,3 +40,4 @@ export const IDIOMAS_SOPORTADOS = [
   { codigo: 'fr', nombre: 'Français' },
   { codigo: 'de', nombre: 'Deutsch' }
 ];
+

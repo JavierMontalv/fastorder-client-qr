@@ -1,5 +1,5 @@
 // ======================================================
-// 🏪 restauranteApi.js – FASTORDER ENTERPRISE (2026)
+// 🏪 restauranteApi.js – COMANDA ENTERPRISE (2026)
 // ------------------------------------------------------
 // Servicio API para gestionar la configuración del
 // restaurante: branding, horarios, métodos de pago,
@@ -13,7 +13,7 @@ import api from "./axiosConfig";
 // 🔐 Helper: encabezados con token JWT
 // ======================================================
 const authHeaders = () => {
-  const token = localStorage.getItem("fastorder_token");
+  const token = localStorage.getItem("comanda_token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
@@ -164,3 +164,4 @@ export default {
   cambiarEstadoRestaurante,
   actualizarRedes
 };
+

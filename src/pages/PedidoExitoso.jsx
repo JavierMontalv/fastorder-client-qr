@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎉 Página de Pedido Exitoso – FASTORDER Client-Web QR (2026)
+// 🎉 Página de Pedido Exitoso – COMANDA Client-Web QR (2026)
 // ----------------------------------------------------------------------
 // ENTERPRISE FIX:
 // • PedidoId persistente vía PedidoContext
@@ -10,7 +10,7 @@
 
 import { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { usePedido } from '../context/PedidoContext';
 
@@ -19,6 +19,7 @@ import '../styles/PedidoExitoso.css';
 export default function PedidoExitoso() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { slug } = useParams();
 
   // ⚠️ location.state SOLO como respaldo visual (no fuente de verdad)
   const { total = 0, tipoPedido = 'mesa' } = location.state || {};
@@ -45,7 +46,7 @@ export default function PedidoExitoso() {
       <div className="pedidoex-container">
         <h1>Pedido enviado</h1>
         <p>No se encontró información del pedido.</p>
-        <button className="pedidoex-button" onClick={() => navigate('/')}>
+        <button className="pedidoex-button" onClick={() => navigate(slug ? `/${slug}` : '/')}>
           Ir al menú
         </button>
       </div>
@@ -102,15 +103,16 @@ export default function PedidoExitoso() {
       {/* 🎯 CTA ENTERPRISE */}
       <button
         className="pedidoex-button pedidoex-primary"
-        onClick={() => navigate('/estado-pedido')}
+        onClick={() => navigate(slug ? `/${slug}/estado-pedido` : '/')}
       >
         Ver estado del pedido
       </button>
 
       {/* 🔙 Volver al menú */}
-      <button className="pedidoex-button pedidoex-secondary" onClick={() => navigate('/')}>
+      <button className="pedidoex-button pedidoex-secondary" onClick={() => navigate(slug ? `/${slug}` : '/')}>
         Volver al menú
       </button>
     </div>
   );
 }
+

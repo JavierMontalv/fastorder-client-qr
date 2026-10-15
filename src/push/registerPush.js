@@ -1,84 +1,74 @@
-// ============================================================================
-// 📱 registerPush.js – FASTORDER Client-QR (2026)
-// ----------------------------------------------------------------------------
-// Funciones profesionales:
-//  • Solicitar permiso de notificaciones
-//  • Registrar Service Worker
-//  • Crear suscripción Push Web
-//  • Enviar la suscripción al backend (para enviar notificaciones reales)
-//  • Manejo de errores estilo Shopify / Stripe
-// ============================================================================
+import { API_BASE_URL } from '../config/env';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-// ---------------------------------------------------------
-// 🟦 Clave pública VAPID (debe venir de .env o del backend)
-// ---------------------------------------------------------
+const API_URL = API_BASE_URL;
+const STORAGE_PREFIX = 'comanda_push_registered';
 export const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
 
-if (!VAPID_PUBLIC_KEY) {
-  console.warn('⚠️ No existe VITE_VAPID_PUBLIC_KEY. Push no funcionará.');
-}
-
-// ---------------------------------------------------------
-// 🧩 Convert Base64 → Uint8Array (requisito de Web Push API)
-// ---------------------------------------------------------
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-
   const rawData = atob(base64);
   return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
 }
 
-// ============================================================================
-// 🚀 REGISTRAR NOTIFICACIONES PUSH
-// ============================================================================
+function isPlaceholderKey(key) {
+  return !key || String(key).includes('REEMPLAZAR');
+}
 
-export async function registerPushNotifications(usuarioId = null) {
+async function obtenerVapidPublicKey() {
+  if (!isPlaceholderKey(VAPID_PUBLIC_KEY)) return VAPID_PUBLIC_KEY;
+
+  const res = await fetch(`${API_URL}/push/config`, {
+    headers: {
+      'X-COMANDA-CLIENT': 'QR-2026'
+    }
+  });
+  const data = await res.json();
+  return data?.data?.vapidPublicKey || null;
+}
+
+export async function registerPushNotifications({ pedidoId, restauranteId } = {}) {
   try {
-    console.log('🔄 Registrando Service Worker…');
-
-    // ---------------------------------------------------------
-    // 1️⃣ Registrar el Service Worker
-    // ---------------------------------------------------------
-    const swRegistration = await navigator.serviceWorker.register('/service-worker.js');
-
-    console.log('📦 Service Worker registrado:', swRegistration.scope);
-
-    // ---------------------------------------------------------
-    // 2️⃣ Solicitar permiso al usuario
-    // ---------------------------------------------------------
-    const permission = await Notification.requestPermission();
-
-    if (permission !== 'granted') {
-      console.warn('🚫 Permiso de notificaciones denegado.');
+    if (!pedidoId || !restauranteId) return null;
+    if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+      console.warn('Este navegador no soporta Web Push.');
       return null;
     }
 
-    console.log('🔐 Permiso concedido para notificaciones.');
+    const storageKey = `${STORAGE_PREFIX}:${pedidoId}`;
+    if (localStorage.getItem(storageKey) === 'ok' && Notification.permission === 'granted') {
+      return null;
+    }
 
-    // ---------------------------------------------------------
-    // 3️⃣ Crear suscripción Push (WebPush API)
-    // ---------------------------------------------------------
-    const subscription = await swRegistration.pushManager.subscribe({
+    const vapidKey = await obtenerVapidPublicKey();
+    if (!vapidKey) {
+      console.warn('No existe VAPID_PUBLIC_KEY. Push no funcionara.');
+      return null;
+    }
+
+    const swRegistration = await navigator.serviceWorker.register('/service-worker.js');
+    const permission = await Notification.requestPermission();
+
+    if (permission !== 'granted') {
+      console.warn('Permiso de notificaciones denegado.');
+      return null;
+    }
+
+    const existing = await swRegistration.pushManager.getSubscription();
+    const subscription = existing || await swRegistration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+      applicationServerKey: urlBase64ToUint8Array(vapidKey)
     });
 
-    console.log('📡 Suscripción creada:', subscription);
-
-    // ---------------------------------------------------------
-    // 4️⃣ Enviar la suscripción al backend (guardar endpoint)
-    // ---------------------------------------------------------
     const res = await fetch(`${API_URL}/push/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-FASTORDER-CLIENT': 'QR-2026'
+        'X-COMANDA-CLIENT': 'QR-2026'
       },
       body: JSON.stringify({
-        usuarioId,
+        pedidoId,
+        restauranteId,
         subscription
       })
     });
@@ -86,14 +76,14 @@ export async function registerPushNotifications(usuarioId = null) {
     const data = await res.json();
 
     if (!data.success) {
-      console.warn('⚠️ Backend no registró suscripción:', data);
-    } else {
-      console.log('✅ Suscripción registrada en servidor:', data);
+      console.warn('Backend no registro suscripcion push:', data);
+      return null;
     }
 
+    localStorage.setItem(storageKey, 'ok');
     return subscription;
   } catch (error) {
-    console.error('❌ Error registrando Push Notifications:', error);
+    console.error('Error registrando Push Notifications:', error);
     return null;
   }
 }

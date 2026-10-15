@@ -1,7 +1,7 @@
 // ======================================================================
 // frontend/client-qr/src/context/PedidoContext.jsx
 // ======================================================================
-// 🧾 PedidoContext.jsx – FASTORDER QR Client 2026 (Enterprise)
+// 🧾 PedidoContext.jsx – COMANDA QR Client 2026 (Enterprise)
 // ----------------------------------------------------------------------
 // Responsabilidad ÚNICA:
 // • Persistir pedidoId del cliente QR
@@ -10,17 +10,31 @@
 // • NO llamadas a API
 // ======================================================================
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { obtenerPedidoActivo } from '../utils/bloqueoPedido';
+import {
+  buildTenantStorageKey,
+  getTenantSlugFromPath,
+  readJsonStorage
+} from '../utils/tenantStorage';
 
-const STORAGE_KEY = 'fastorder_pedido_id';
+const STORAGE_KEY = 'comanda_pedido_id';
 
 const PedidoContext = createContext(null);
 
 function PedidoProvider({ children }) {
+  const location = useLocation();
+  const tenantSlug = useMemo(() => getTenantSlugFromPath(location.pathname), [location.pathname]);
+  const storageKey = useMemo(() => buildTenantStorageKey(STORAGE_KEY, tenantSlug), [tenantSlug]);
+
   const [pedidoId, setPedidoIdState] = useState(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? stored : null;
+      const stored = readJsonStorage(buildTenantStorageKey(STORAGE_KEY));
+      if (stored) return stored;
+
+      const pedidoActivo = obtenerPedidoActivo();
+      return pedidoActivo?.pedidoId ? String(pedidoActivo.pedidoId) : null;
     } catch {
       return null;
     }
@@ -28,13 +42,28 @@ function PedidoProvider({ children }) {
 
   useEffect(() => {
     try {
+      const stored = readJsonStorage(storageKey);
+      if (stored) {
+        setPedidoIdState(String(stored));
+        return;
+      }
+
+      const pedidoActivo = obtenerPedidoActivo();
+      setPedidoIdState(pedidoActivo?.pedidoId ? String(pedidoActivo.pedidoId) : null);
+    } catch {
+      setPedidoIdState(null);
+    }
+  }, [storageKey]);
+
+  useEffect(() => {
+    try {
       if (pedidoId) {
-        localStorage.setItem(STORAGE_KEY, String(pedidoId));
+        localStorage.setItem(storageKey, JSON.stringify(String(pedidoId)));
       } else {
-        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(storageKey);
       }
     } catch {}
-  }, [pedidoId]);
+  }, [pedidoId, storageKey]);
 
   const setPedidoId = (id) => {
     if (!id) return;
@@ -68,3 +97,4 @@ function usePedido() {
 
 export default PedidoProvider;
 export { PedidoContext, usePedido };
+

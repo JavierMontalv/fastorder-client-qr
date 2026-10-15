@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎚 OrderProgressBar.jsx – FASTORDER QR Client 2026 (Enterprise Edition)
+// 🎚 OrderProgressBar.jsx – COMANDA QR Client 2026 (Enterprise Edition)
 // ----------------------------------------------------------------------
 // Barra de progreso animada estilo UberEats:
 //  ✓ Estados dinámicos
@@ -69,3 +69,4 @@ export default function OrderProgressBar({ estado }) {
     </div>
   );
 }
+

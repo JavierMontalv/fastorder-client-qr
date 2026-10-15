@@ -1,6 +1,6 @@
 // client-qr/src/context/MenuContext.js
 // ======================================================================
-// 🍽️ Contexto Menú Público — FASTORDER Client QR (Enterprise 2026)
+// 🍽️ Contexto Menú Público — COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // • Fuente de verdad del menú
 // • Evita re-fetch innecesario
@@ -37,3 +37,4 @@ export function useMenu() {
   }
   return context;
 }
+

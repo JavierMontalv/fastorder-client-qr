@@ -1,5 +1,5 @@
 // ============================================================================
-// 🌎 i18n/index.js – FASTORDER Client-QR (2026 Enterprise)
+// 🌎 i18n/index.js – COMANDA Client-QR (2026 Enterprise)
 // ---------------------------------------------------------------------------
 // Sistema multilenguaje tipo Uber Eats / Airbnb:
 //  • Detección automática del idioma del navegador
@@ -11,6 +11,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { API_BASE_URL } from "../config/env";
 
 // ===============================================================
 // 📁 Importar catálogos
@@ -63,7 +64,7 @@ i18n
 // ============================================================================
 export async function i18nIA(texto, targetLang = "en") {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/ia/traducir`, {
+    const res = await fetch(`${API_BASE_URL}/ia/traducir`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ texto, targetLang })
@@ -78,3 +79,4 @@ export async function i18nIA(texto, targetLang = "en") {
 }
 
 export default i18n;
+

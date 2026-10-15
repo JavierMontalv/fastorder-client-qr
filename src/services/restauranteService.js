@@ -1,5 +1,5 @@
 // ========================================================================
-// 🌐 Servicio de Restaurante – FASTORDER QR Client 2026
+// 🌐 Servicio de Restaurante – COMANDA QR Client 2026
 // ------------------------------------------------------------------------
 // • Consume SOLO endpoints públicos
 // • Identidad basada en SLUG (multi-tenant real)
@@ -12,7 +12,7 @@
 import api from '../api/axiosConfig';
 
 // ========================================================================
-// 🔧 Helper interno: normalizar respuesta FastOrder
+// 🔧 Helper interno: normalizar respuesta Comanda
 // ========================================================================
 const unwrap = (res, fallback = []) => res?.data?.data ?? fallback;
 
@@ -79,3 +79,4 @@ export const obtenerCategoriasPublicas = async (slug) => {
     return [];
   }
 };
+

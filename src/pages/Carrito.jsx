@@ -1,5 +1,5 @@
 // ======================================================================
-// 🛒client-qr/src/pages/Carrito.jsx – FASTORDER ENTERPRISE 2026
+// 🛒client-qr/src/pages/Carrito.jsx – COMANDA ENTERPRISE 2026
 // ----------------------------------------------------------------------
 // Carrito premium estilo Shopify · UberEats · Rappi
 //  • UI basada en Theme.css + Colors.css
@@ -151,3 +151,4 @@ export default function Carrito({ items, onUpdateQty, onRemoveItem, onCheckout }
     </div>
   );
 }
+

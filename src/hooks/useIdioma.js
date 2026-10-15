@@ -1,5 +1,5 @@
 // ======================================================================
-// 🌐 useIdioma.js — FASTORDER Client-QR (Enterprise 2026)
+// 🌐 useIdioma.js — COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Hook global para manejo avanzado de idioma:
 //  • Obtener idioma actual
@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import i18n from '../i18n';
 
-const STORAGE_KEY = 'fastorder_lang';
+const STORAGE_KEY = 'comanda_lang';
 
 export default function useIdioma() {
   const [idioma, setIdioma] = useState(i18n.language || 'es');
@@ -67,3 +67,4 @@ export default function useIdioma() {
     traducirIA
   };
 }
+

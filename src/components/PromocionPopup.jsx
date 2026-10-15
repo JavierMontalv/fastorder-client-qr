@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎉 PromocionPopup.jsx – FASTORDER Client QR 2026 (Enterprise)
+// 🎉 PromocionPopup.jsx – COMANDA Client QR 2026 (Enterprise)
 // ----------------------------------------------------------------------
 // Componente premium con:
 //  • Animación de entrada/salida tipo Shopify + Rappi
@@ -63,3 +63,4 @@ export default function PromocionPopup({ promo, visible, onClose }) {
     </AnimatePresence>
   );
 }
+

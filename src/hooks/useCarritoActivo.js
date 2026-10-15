@@ -1,6 +1,6 @@
 // client-qr/src/hooks/useCarritoActivo.js
 // ===================================================================
-// 🛒 useCarritoActivo — FASTORDER Client QR 2026 (PRE FASE 3)
+// 🛒 useCarritoActivo — COMANDA Client QR 2026 (PRE FASE 3)
 // -------------------------------------------------------------------
 // • Hook derivado (SIN lógica de negocio)
 // • Centraliza estado "carrito activo"
@@ -19,3 +19,4 @@ export default function useCarritoActivo() {
     total
   };
 }
+

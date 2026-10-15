@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎉 Servicio de Promociones – FASTORDER Client-QR (2026)
+// 🎉 Servicio de Promociones – COMANDA Client-QR (2026)
 // ----------------------------------------------------------------------
 // Funcionalidades Enterprise:
 //  • Obtener promociones activas por restaurante
@@ -17,7 +17,9 @@
 // ==========================================================
 // 🌐 Configuración Global
 // ==========================================================
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { API_BASE_URL } from '../config/env';
+
+const BASE_URL = API_BASE_URL;
 
 if (!BASE_URL) {
   console.error('❌ ERROR CRÍTICO: VITE_API_URL no está definido en .env');
@@ -62,8 +64,8 @@ export async function obtenerPromociones(restauranteId = 1) {
     const res = await fetchWithTimeout(`${API_URL}/public?restauranteId=${restauranteId}`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json',
-        'X-FASTORDER-CLIENT': 'QR-2026'
+        Accept: 'application/json'
+        // Sin headers personalizados: evita preflight CORS innecesario
       }
     });
 
@@ -80,6 +82,35 @@ export async function obtenerPromociones(restauranteId = 1) {
   }
 }
 
+// ======================================================================
+// 📱 Obtener promo principal de entrada por slug
+// ======================================================================
+export async function obtenerPromocionEntradaPorSlug(slug) {
+  const slugNormalizado = `${slug ?? ''}`.trim();
+  if (!slugNormalizado) return null;
+
+  try {
+    const res = await fetchWithTimeout(
+      `${API_URL}/public/entrada/${encodeURIComponent(slugNormalizado)}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json'
+        },
+        timeout: 8000
+      }
+    );
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const json = await safeJson(res);
+    return json?.data ?? null;
+  } catch (error) {
+    console.error('❌ Error obteniendo promo de entrada por slug:', error);
+    return null;
+  }
+}
+
 // Alias PRO para compatibilidad con versiones previas
 export const getPromocionesActivas = obtenerPromociones;
 
@@ -92,10 +123,7 @@ export async function registrarImpresion(id) {
   try {
     await fetchWithTimeout(`${API_URL}/${id}/impresion`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-FASTORDER-CLIENT': 'QR-2026'
-      }
+      headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (error) {
@@ -112,13 +140,8 @@ export async function registrarClick(id) {
   try {
     await fetchWithTimeout(`${API_URL}/${id}/click`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-FASTORDER-CLIENT': 'QR-2026'
-      }
+      headers: { 'Content-Type': 'application/json' }
     });
-
-    console.log(`🖱 Clic registrado para promoción ${id}`);
   } catch (error) {
     console.error('❌ Error registrando clic:', error);
   }
@@ -129,7 +152,9 @@ export async function registrarClick(id) {
 // ======================================================================
 export default {
   obtenerPromociones,
+  obtenerPromocionEntradaPorSlug,
   getPromocionesActivas,
   registrarImpresion,
   registrarClick
 };
+
