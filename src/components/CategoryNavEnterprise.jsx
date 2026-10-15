@@ -15,15 +15,31 @@ function getFallbackIcon(nombre = '') {
 
 export default function CategoryNavEnterprise({ categorias = [], categoriaActiva, onChange }) {
   const itemRefs = useRef({});
+  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
     const activeItem = itemRefs.current[categoriaActiva];
-    if (!activeItem) return;
+    if (!scrollContainer || !activeItem) return;
 
-    activeItem.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-      block: 'nearest'
+    // scrollIntoView also scrolls ancestor containers on the vertical axis.
+    // On iOS Safari that pulled the whole menu back toward the sticky category
+    // navigation whenever IntersectionObserver selected a new category.
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+    const centeredLeft =
+      scrollContainer.scrollLeft +
+      itemRect.left -
+      containerRect.left -
+      (containerRect.width - itemRect.width) / 2;
+    const maxLeft = Math.max(0, scrollContainer.scrollWidth - scrollContainer.clientWidth);
+    const nextLeft = Math.min(maxLeft, Math.max(0, centeredLeft));
+
+    if (Math.abs(scrollContainer.scrollLeft - nextLeft) < 1) return;
+
+    scrollContainer.scrollTo({
+      left: nextLeft,
+      behavior: 'smooth'
     });
   }, [categoriaActiva]);
 
@@ -31,7 +47,7 @@ export default function CategoryNavEnterprise({ categorias = [], categoriaActiva
 
   return (
     <nav className="category-nav-enterprise" aria-label="Categorias del menu">
-      <div className="category-nav-inner">
+      <div ref={scrollContainerRef} className="category-nav-inner">
         <span className="category-nav-menu-label">
           Menu
           <ChevronDown aria-hidden="true" />
