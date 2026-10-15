@@ -1,5 +1,5 @@
 // ======================================================================
-// 🔢 formatearPrecio.js — FASTORDER Client QR (Enterprise 2026)
+// 🔢 formatearPrecio.js — COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Fuente ÚNICA de verdad para formato monetario
 // • COP
@@ -26,3 +26,4 @@ export default function formatearPrecio(valor) {
     return `$ ${valor ?? 0}`;
   }
 }
+

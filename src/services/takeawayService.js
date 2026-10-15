@@ -1,5 +1,5 @@
 // ======================================================================
-// 🛍 takeawayService.js – FASTORDER Client-QR (Enterprise 2026)
+// 🛍 takeawayService.js – COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Servicio para obtener configuración avanzada del modo “Para llevar”:
 //  • Punto de recogida
@@ -8,7 +8,9 @@
 //  • Protección contra errores y APIs caídas
 // ======================================================================
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { API_BASE_URL } from '../config/env';
+
+const BASE_URL = API_BASE_URL;
 
 if (!BASE_URL) {
   console.error('❌ ERROR CRÍTICO: VITE_API_URL no está definido en .env');
@@ -61,7 +63,7 @@ export async function getTakeawayInfo(restauranteId = 1) {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        'X-FASTORDER-CLIENT': 'QR-2026'
+        'X-COMANDA-CLIENT': 'QR-2026'
       }
     });
 
@@ -96,3 +98,4 @@ export default {
   getTakeawayInfo,
   obtenerTakeawayInfo
 };
+

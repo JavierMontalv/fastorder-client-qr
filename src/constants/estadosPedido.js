@@ -1,6 +1,6 @@
 // client-qr/src/constants/estadosPedido.js
 // ======================================================
-// 🧾 Estados de Pedido – FASTORDER Client QR (Enterprise 2026)
+// 🧾 Estados de Pedido – COMANDA Client QR (Enterprise 2026)
 // ------------------------------------------------------
 // VALIDACIÓN FASE 6 (QUIRÚRGICA – SENIOR):
 // ✔ Mapping estado → texto humano (UX)
@@ -74,3 +74,4 @@ export const LABELS_ESTADOS_PAGO = Object.freeze({
   [ESTADOS_PAGO.PAGADO]: 'Pago confirmado',
   [ESTADOS_PAGO.FALLIDO]: 'Pago fallido'
 });
+

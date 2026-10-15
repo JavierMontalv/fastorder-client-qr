@@ -1,5 +1,5 @@
 // ======================================================================
-// 🌐 LanguageSelector.jsx — FASTORDER Client-QR (Enterprise 2026)
+// 🌐 LanguageSelector.jsx — COMANDA Client-QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Selector de idioma premium:
 //  • i18next integrado
@@ -20,7 +20,7 @@ export default function LanguageSelector() {
   // 🔄 Persistir idioma en localStorage
   // ================================================================
   useEffect(() => {
-    const saved = localStorage.getItem('fastorder_lang');
+    const saved = localStorage.getItem('comanda_lang');
     if (saved) {
       setLang(saved);
       i18n.changeLanguage(saved);
@@ -30,7 +30,7 @@ export default function LanguageSelector() {
   const cambiarIdioma = (codigo) => {
     setLang(codigo);
     i18n.changeLanguage(codigo);
-    localStorage.setItem('fastorder_lang', codigo);
+    localStorage.setItem('comanda_lang', codigo);
     setOpen(false);
   };
 
@@ -72,3 +72,4 @@ export default function LanguageSelector() {
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 /* ======================================================================
-   FASTORDER QR CLIENT – BASE GLOBAL STYLES (Enterprise Edition)
+   COMANDA QR CLIENT – BASE GLOBAL STYLES (Enterprise Edition)
    ----------------------------------------------------------------------
    Este archivo NO debe sobrescribir colores del Theme/Colors.
    Solo define ajustes mínimos del layout.
@@ -18,7 +18,7 @@ html, body {
 
 /* Body bajo el Theme */
 body {
-  background: var(--bg-body);      /* ✔ FONDO ENTERPRISE */
+  background: var(--bg-app-gradient);      /* ✔ FONDO ENTERPRISE */
   color: var(--text-main);         /* ✔ TEXTO ENTERPRISE */
   font-family: var(--font-family); /* ✔ TIPOGRAFÍA ENTERPRISE */
   -webkit-font-smoothing: antialiased;
@@ -28,7 +28,9 @@ body {
 .qr-app-container {
   width: 100%;
   min-height: 100vh;
-  background: var(--bg-body);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.44), transparent 20%),
+    var(--bg-app-gradient);
 }
 
 /* Tablet: centrado con sombra lateral para simular POS */
@@ -36,6 +38,7 @@ body {
   .qr-app-container {
     max-width: 640px;
     margin: 0 auto;
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-xl);
   }
 }
+

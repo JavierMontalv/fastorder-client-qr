@@ -1,6 +1,6 @@
 // client-qr/src/utils/validarPedido.js
 // ======================================================================
-// 🧠 validarPedido.js – FASTORDER Client QR (Enterprise 2026)
+// 🧠 validarPedido.js – COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Blindaje total del flujo de pedido (UX + lógica)
 // • Funciones PURAS (sin React, sin contexto)
@@ -17,7 +17,7 @@
 // 📌 Definición de pasos válidos del flujo
 // ======================================================
 export const PASOS_PEDIDO = Object.freeze({
-  CONTEXTO: 'contexto', // mesa / domicilio
+  CONTEXTO: 'contexto', // mesa / llevar
   PAGO: 'pago', // caja / online
   CONFIRMACION: 'confirmacion'
 });
@@ -50,6 +50,10 @@ export const ERRORES_PEDIDO = Object.freeze({
     codigo: 'FALTA_METODO_PAGO',
     mensaje: 'Debes seleccionar un método de pago'
   },
+  FALTA_CLIENTE_NOMBRE: {
+    codigo: 'FALTA_CLIENTE_NOMBRE',
+    mensaje: 'Debes indicar el nombre de la persona que hace el pedido'
+  },
   SALTO_ILEGAL: {
     codigo: 'SALTO_ILEGAL',
     mensaje: 'No puedes avanzar sin completar el paso anterior'
@@ -68,18 +72,19 @@ const cantidadesValidas = (items) =>
 
 const contextoValido = (pedido) =>
   pedido?.tipoPedido === 'mesa' ||
-  pedido?.tipoPedido === 'domicilio';
+  pedido?.tipoPedido === 'llevar';
 
 const mesaValida = (pedido) =>
   pedido?.tipoPedido !== 'mesa' ||
   Boolean(pedido?.mesaId);
 
-const direccionValida = (pedido) =>
-  pedido?.tipoPedido !== 'domicilio' ||
-  Boolean(pedido?.direccion);
+const direccionValida = () => true;
 
 const metodoPagoValido = (pedido) =>
   Boolean(pedido?.metodoPago);
+
+const clienteNombreValido = (pedido) =>
+  String(pedido?.clienteNombre || '').trim().length >= 2;
 
 // ======================================================
 // 🧠 Validador principal
@@ -122,15 +127,6 @@ export function validarPedido(pedido = {}, pasoActual) {
       });
     }
 
-    if (
-      pedido.tipoPedido === 'domicilio' &&
-      !direccionValida(pedido)
-    ) {
-      errores.push({
-        campo: 'direccion',
-        ...ERRORES_PEDIDO.FALTA_DIRECCION
-      });
-    }
   }
 
   // --------------------------------------------------
@@ -164,6 +160,13 @@ export function validarPedido(pedido = {}, pasoActual) {
         ...ERRORES_PEDIDO.FALTA_METODO_PAGO
       });
     }
+
+    if (!clienteNombreValido(pedido)) {
+      errores.push({
+        campo: 'clienteNombre',
+        ...ERRORES_PEDIDO.FALTA_CLIENTE_NOMBRE
+      });
+    }
   }
 
   // --------------------------------------------------
@@ -174,7 +177,8 @@ export function validarPedido(pedido = {}, pasoActual) {
       !contextoValido(pedido) ||
       !mesaValida(pedido) ||
       !direccionValida(pedido) ||
-      !metodoPagoValido(pedido)
+      !metodoPagoValido(pedido) ||
+      !clienteNombreValido(pedido)
     ) {
       errores.push({
         campo: 'flujo',
@@ -194,3 +198,4 @@ export function validarPedido(pedido = {}, pasoActual) {
     errores
   };
 }
+

@@ -1,6 +1,6 @@
 // client-qr/src/hooks/useAITranslate.js
 // ============================================================================
-// 🤖 Hook: useAITranslate – FASTORDER QR (2026)
+// 🤖 Hook: useAITranslate – COMANDA QR (2026)
 // ----------------------------------------------------------------------------
 // Funciones enterprise:
 //  • Traducción inteligente mediante backend IA (OpenAI)
@@ -12,6 +12,7 @@
 
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../config/env';
 
 const CACHE_KEY = 'fo_translate_cache_v1';
 
@@ -58,7 +59,7 @@ export function useAITranslate() {
       setCargando(true);
 
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/traduccion/ai`, {
+        const res = await fetch(`${API_BASE_URL}/traduccion/ai`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -135,3 +136,4 @@ export function useAITranslate() {
 }
 
 export default useAITranslate;
+

@@ -1,5 +1,5 @@
 // ===================================================================
-// 📌 App.jsx – FASTORDER QR Client (2026) – Enterprise Edition
+// 📌 App.jsx – COMANDA QR Client (2026) – Enterprise Edition
 // -------------------------------------------------------------------
 // Layout raíz del cliente QR
 //
@@ -25,3 +25,4 @@ export default function App() {
     </div>
   );
 }
+

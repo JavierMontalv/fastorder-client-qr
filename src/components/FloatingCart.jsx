@@ -1,5 +1,5 @@
 // ======================================================================
-// 🛒 FloatingCart.jsx – FASTORDER QR Client (Enterprise 2026)
+// 🛒 FloatingCart.jsx – COMANDA QR Client (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Botón flotante tipo Rappi / UberEats:
 //  • Badge con cantidad
@@ -83,3 +83,4 @@ export default function FloatingCart({ items = [], onOpenCart }) {
     </div>
   );
 }
+

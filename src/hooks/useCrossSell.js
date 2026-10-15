@@ -1,5 +1,5 @@
 // ======================================================================
-// 🎯 useCrossSell.js – Hook Enterprise FASTORDER QR 2026
+// 🎯 useCrossSell.js – Hook Enterprise COMANDA QR 2026
 // ----------------------------------------------------------------------
 // Funciones Premium:
 //  • Obtiene sugerencias de cross-selling para un producto
@@ -103,3 +103,4 @@ export default function useCrossSell() {
     resetCrossSell
   };
 }
+

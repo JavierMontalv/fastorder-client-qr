@@ -1,6 +1,6 @@
 // client-qr/src/services/productoService.js
 // ======================================================================
-// 📦 productoService.js — FASTORDER Client QR (Enterprise 2026)
+// 📦 productoService.js — COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // • Fuente ÚNICA de datos de configuración de productos
 // • Normaliza la respuesta del backend
@@ -21,3 +21,4 @@ export async function obtenerOpcionesProducto(productoId) {
     gruposOpciones: data?.gruposOpciones || []
   };
 }
+

@@ -1,0 +1,392 @@
+/* =============================================================================
+   PedidoEnCursoBanner.css — COMANDA QR 2026 — Senior Premium
+   Tarjeta de seguimiento del pedido activo en el menú QR.
+   ============================================================================= */
+
+@import './Theme.css';
+
+/* ─── Variables locales ────────────────────────────────────────────── */
+.pec-banner {
+  --pec-accent:        #d97706;
+  --pec-accent-soft:   rgba(217, 119, 6, 0.10);
+  --pec-accent-border: rgba(217, 119, 6, 0.18);
+  --pec-radius:        26px;
+}
+
+.pec-banner--info {
+  --pec-accent:        #0ea5e9;
+  --pec-accent-soft:   rgba(14, 165, 233, 0.09);
+  --pec-accent-border: rgba(14, 165, 233, 0.20);
+}
+
+.pec-banner--success {
+  --pec-accent:        #10b981;
+  --pec-accent-soft:   rgba(16, 185, 129, 0.09);
+  --pec-accent-border: rgba(16, 185, 129, 0.22);
+}
+
+/* ─── Contenedor ───────────────────────────────────────────────────── */
+.pec-banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 14px 16px 0;
+  padding: 16px 18px 15px 22px;
+  border-radius: var(--pec-radius);
+  border: 1px solid var(--pec-accent-border);
+  background:
+    radial-gradient(circle at top right, var(--pec-accent-soft), transparent 44%),
+    rgba(255, 255, 255, 0.97);
+  box-shadow:
+    0 2px 4px rgba(15, 23, 42, 0.04),
+    0 12px 28px rgba(15, 23, 42, 0.07);
+  cursor: pointer;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  will-change: transform;
+}
+
+.pec-banner:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px rgba(15, 23, 42, 0.05),
+    0 18px 38px rgba(15, 23, 42, 0.10);
+}
+
+.pec-banner:active {
+  transform: scale(0.99);
+  transition-duration: 80ms;
+}
+
+/* ─── Borde lateral de color ──────────────────────────────────────── */
+.pec-stripe {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3.5px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--pec-accent) 80%, white), var(--pec-accent));
+}
+
+/* ─── Fila superior ────────────────────────────────────────────────── */
+.pec-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+
+/* Indicador live */
+.pec-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.16);
+  flex-shrink: 0;
+}
+
+.pec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pec-dot--live {
+  background: #10b981;
+  animation: pec-pulse 1.8s ease-in-out infinite;
+}
+
+.pec-dot--sync {
+  background: #f59e0b;
+  animation: pec-blink 1.2s ease-in-out infinite;
+}
+
+.pec-live-text {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #065f46;
+  line-height: 1;
+}
+
+/* Número de pedido */
+.pec-num {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón Ver estado */
+.pec-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--text-main);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 120ms ease, transform 80ms ease;
+}
+
+.pec-banner:hover .pec-cta   { background: #1e293b; }
+.pec-banner:active .pec-cta  { transform: scale(0.94); }
+
+/* ─── Cuerpo: ícono + texto ────────────────────────────────────────── */
+.pec-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Ícono / emoji */
+.pec-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  animation: pec-bob 3s ease-in-out infinite;
+}
+
+.pec-icon--warning {
+  background: linear-gradient(135deg, rgba(251,191,36,.20), rgba(217,119,6,.12));
+  border-color: rgba(217,119,6,.14);
+}
+.pec-icon--info {
+  background: linear-gradient(135deg, rgba(56,189,248,.18), rgba(14,165,233,.10));
+  border-color: rgba(14,165,233,.14);
+}
+.pec-icon--success {
+  background: linear-gradient(135deg, rgba(52,211,153,.22), rgba(16,185,129,.12));
+  border-color: rgba(16,185,129,.16);
+}
+
+.pec-emoji {
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* Texto */
+.pec-copy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pec-copy-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.pec-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.pec-badge--warning { background: rgba(217,119,6,.10); color: #92400e; border-color: rgba(217,119,6,.16); }
+.pec-badge--info    { background: rgba(14,165,233,.10); color: #075985; border-color: rgba(14,165,233,.18); }
+.pec-badge--success { background: rgba(16,185,129,.10); color: #065f46; border-color: rgba(16,185,129,.18); }
+
+.pec-total {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.pec-titulo {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.pec-desc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ─── Barra de progreso ─────────────────────────────────────────────── */
+.pec-track {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+.pec-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  position: relative;
+}
+
+/* Nodo circular */
+.pec-node {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  z-index: 1;
+  color: #fff;
+  transition: border-color 280ms ease, background 280ms ease, box-shadow 280ms ease;
+}
+
+.pec-node-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  transition: background 280ms ease;
+}
+
+/* Paso completado */
+.pec-step--done .pec-node {
+  border-color: var(--brand-primary);
+  background: var(--brand-primary);
+}
+
+/* Paso actual */
+.pec-banner--warning .pec-step--current .pec-node {
+  border-color: #d97706;
+  background: #d97706;
+  box-shadow: 0 0 0 4px rgba(217,119,6,.16);
+  animation: pec-step-glow-warning 2s ease-in-out infinite;
+}
+.pec-banner--info .pec-step--current .pec-node {
+  border-color: #0ea5e9;
+  background: #0ea5e9;
+  box-shadow: 0 0 0 4px rgba(14,165,233,.18);
+  animation: pec-step-glow-info 2s ease-in-out infinite;
+}
+.pec-banner--success .pec-step--current .pec-node {
+  border-color: #10b981;
+  background: #10b981;
+  box-shadow: 0 0 0 4px rgba(16,185,129,.18);
+  animation: pec-step-glow-success 2s ease-in-out infinite;
+}
+
+/* Línea horizontal */
+.pec-line {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  z-index: 0;
+  transition: background 360ms ease;
+}
+
+.pec-line--done {
+  background: linear-gradient(90deg, var(--brand-primary) 0%, rgba(241,41,84,.45) 100%);
+}
+
+/* Etiquetas */
+.pec-step-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: color 280ms ease;
+}
+
+.pec-step--done .pec-step-label,
+.pec-step--current .pec-step-label {
+  color: var(--text-soft);
+}
+
+/* ─── Animaciones ──────────────────────────────────────────────────── */
+@keyframes pec-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,.45); }
+  50%       { opacity: .85; box-shadow: 0 0 0 5px rgba(16,185,129,0); }
+}
+
+@keyframes pec-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .4; }
+}
+
+@keyframes pec-bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-3px); }
+}
+
+@keyframes pec-step-glow-warning {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(217,119,6,.16); }
+  50%       { box-shadow: 0 0 0 7px rgba(217,119,6,.06); }
+}
+
+@keyframes pec-step-glow-info {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(14,165,233,.18); }
+  50%       { box-shadow: 0 0 0 7px rgba(14,165,233,.06); }
+}
+
+@keyframes pec-step-glow-success {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(16,185,129,.18); }
+  50%       { box-shadow: 0 0 0 7px rgba(16,185,129,.06); }
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .pec-banner   { margin: 12px 12px 0; padding: 14px 14px 13px 19px; gap: 11px; }
+  .pec-icon     { width: 42px; height: 42px; border-radius: 14px; }
+  .pec-emoji    { font-size: 20px; }
+  .pec-titulo   { font-size: 14px; }
+  .pec-cta      { padding: 5px 10px; font-size: 10px; }
+  .pec-node     { width: 18px; height: 18px; }
+  .pec-line     { top: 9px; }
+}
+
+@media (max-width: 360px) {
+  .pec-cta svg  { display: none; }
+  .pec-step-label { font-size: 8.5px; }
+}

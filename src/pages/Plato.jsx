@@ -1,5 +1,5 @@
 // ===================================================================
-// 🍽️ client-qr/src/pages/Plato.jsx – FASTORDER (Enterprise 2026)
+// 🍽️ client-qr/src/pages/Plato.jsx – COMANDA (Enterprise 2026)
 // -------------------------------------------------------------------
 // Vista individual estilo Uber Eats / Rappi Food
 // • Memory-first (NO requests)
@@ -48,7 +48,7 @@ export default function Plato() {
     return null;
   }
 
-  const disponible = producto.estado !== 'inactivo';
+  const disponible = producto.disponible !== false && producto.estado !== 'inactivo';
   const total = producto.precio * cantidad;
 
   // ================================================================
@@ -164,3 +164,4 @@ export default function Plato() {
     </div>
   );
 }
+

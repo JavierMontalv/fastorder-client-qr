@@ -1,32 +1,39 @@
 /* ============================================================================
-   🌐 THEME GLOBAL FASTORDER ENTERPRISE 2026
-   Dark Glass Premium — Shopify · Stripe · Linear
+   🌐 THEME GLOBAL COMANDA ENTERPRISE 2026
+   Premium Light — Clean · Fast · Intuitive
    Archivo: src/styles/Theme.css
 ============================================================================ */
 
 @import './Colors.css';
 
 /* ------------------------------------------------------------
-   🔤 TIPOGRAFÍA GLOBAL (ENTERPRISE)
+   🔤 TIPOGRAFÍA GLOBAL
 ------------------------------------------------------------ */
 :root {
   --font-family:
-    'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    'Plus Jakarta Sans Variable', 'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display:
+    'Plus Jakarta Sans Variable', 'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-numeric:
+    'Inter Variable', 'Plus Jakarta Sans Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Escala tipográfica consistente con Menu.css */
-  --font-xs: 12px;
-  --font-sm: 13px;
+  /* Escala tipográfica */
+  --font-xs: 11px;
+  --font-sm: 12px;
   --font-md: 14px;
-  --font-lg: 15px;
+  --font-base: 15px;
+  --font-lg: 16px;
   --font-xl: 18px;
   --font-2xl: 22px;
   --font-3xl: 28px;
+  --font-4xl: 34px;
 
   /* Pesos */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
+  --weight-extrabold: 800;
 
   /* Espaciados */
   --space-xs: 4px;
@@ -34,79 +41,102 @@
   --space-md: 14px;
   --space-lg: 20px;
   --space-xl: 32px;
+  --space-2xl: 48px;
 
   /* Transiciones */
-  --transition-fast: 120ms ease;
-  --transition: 180ms ease;
-  --transition-slow: 260ms ease;
+  --transition-fast: 100ms ease;
+  --transition: 160ms ease;
+  --transition-slow: 240ms ease;
+  --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ------------------------------------------------------------
    🧹 RESET GLOBAL
 ------------------------------------------------------------ */
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
 }
 
 body {
   background: var(--bg-body);
   color: var(--text-main);
   font-family: var(--font-family);
+  font-size: var(--font-base);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
   overflow-x: hidden;
 }
 
-/* Scrollbar premium */
-::-webkit-scrollbar {
-  width: 8px;
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
 }
+
+::selection {
+  background: rgba(241, 41, 84, 0.18);
+  color: var(--text-main);
+}
+
+/* Scrollbar premium — sutil */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.10);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.26);
+  background: rgba(0, 0, 0, 0.20);
 }
 
 /* ------------------------------------------------------------
-   🏷️ TEXTO
+   🏷️ TEXTO BASE
 ------------------------------------------------------------ */
-h1,
-h2,
-h3,
-h4 {
-  font-weight: var(--weight-semibold);
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
   color: var(--text-main);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
 }
 
 p {
   font-size: var(--font-md);
-  color: var(--text-soft);
-  line-height: 1.5;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
 .fo-title-page {
   font-size: var(--font-3xl);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.5px;
 }
 
 .fo-subtitle {
   font-size: var(--font-md);
   color: var(--text-muted);
+  font-weight: var(--weight-regular);
 }
 
 /* ------------------------------------------------------------
-   🧱 TARJETAS
+   🧱 TARJETAS (Cards)
 ------------------------------------------------------------ */
 .fo-card {
-  background: var(--bg-surface);
+  background: var(--surface-elevated);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
   padding: 18px 22px;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(16px);
+  transition: box-shadow var(--transition), transform var(--transition);
 }
 
 .fo-card:hover {
@@ -115,35 +145,98 @@ p {
 }
 
 /* ------------------------------------------------------------
-   🟦 BOTONES
+   🟥 BOTONES — Sistema completo
 ------------------------------------------------------------ */
 .fo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   padding: 10px 18px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   font-size: var(--font-md);
   font-weight: var(--weight-semibold);
+  font-family: var(--font-family);
   cursor: pointer;
   border: none;
-  transition: var(--transition);
+  transition: background var(--transition), transform var(--transition-fast),
+    box-shadow var(--transition), opacity var(--transition);
+  white-space: nowrap;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* Primario — rojo brand */
 .fo-btn-primary {
   background: var(--brand-primary);
-  color: #fff;
+  color: #ffffff;
+  box-shadow: var(--shadow-brand-sm);
 }
-.fo-btn-primary:hover {
+.fo-btn-primary:hover:not(:disabled) {
   background: var(--brand-primary-hover);
+  box-shadow: var(--shadow-brand);
   transform: translateY(-1px);
 }
+.fo-btn-primary:active:not(:disabled) {
+  background: var(--brand-primary-active);
+  transform: scale(0.97);
+  box-shadow: none;
+}
+.fo-btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
 
+/* Secundario — outline */
 .fo-btn-outline {
   background: transparent;
   color: var(--brand-primary);
-  border: 1px solid var(--brand-primary);
+  border: 1.5px solid var(--brand-primary);
 }
-.fo-btn-outline:hover {
+.fo-btn-outline:hover:not(:disabled) {
   background: var(--brand-primary-soft);
 }
+.fo-btn-outline:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Neutro */
+.fo-btn-neutral {
+  background: var(--bg-soft);
+  color: var(--text-soft);
+  border: 1px solid var(--border);
+}
+.fo-btn-neutral:hover:not(:disabled) {
+  background: var(--bg-hover);
+}
+
+/* Ghost */
+.fo-btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+.fo-btn-ghost:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-main);
+}
+
+/* Danger */
+.fo-btn-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid rgba(220, 38, 38, 0.20);
+}
+.fo-btn-danger:hover:not(:disabled) {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* Tamaños */
+.fo-btn-sm { padding: 6px 12px; font-size: var(--font-sm); }
+.fo-btn-lg { padding: 14px 28px; font-size: var(--font-lg); }
+.fo-btn-block { width: 100%; }
 
 /* ------------------------------------------------------------
    🔗 LINKS
@@ -151,22 +244,26 @@ p {
 a {
   color: var(--brand-primary);
   text-decoration: none;
+  transition: color var(--transition);
 }
-a:hover {
-  color: var(--brand-primary-hover);
-}
+a:hover { color: var(--brand-primary-hover); }
 
 /* ------------------------------------------------------------
    🧩 INPUTS
 ------------------------------------------------------------ */
 .fo-input {
   width: 100%;
-  padding: 10px 12px;
+  padding: 11px 14px;
   border-radius: var(--radius-md);
   background: var(--bg-surface-soft);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   font-size: var(--font-md);
+  font-family: var(--font-family);
+  color: var(--text-main);
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
+
+.fo-input::placeholder { color: var(--text-placeholder); }
 
 .fo-input:focus {
   border-color: var(--brand-primary);
@@ -175,22 +272,27 @@ a:hover {
   outline: none;
 }
 
+textarea.fo-input { resize: none; }
+
 /* ------------------------------------------------------------
-   🌙 GLASS UI
+   🏷️ BADGES
 ------------------------------------------------------------ */
-.fo-glass {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  border-radius: var(--radius-lg);
-  padding: 14px;
-  box-shadow: var(--shadow-card);
+.fo-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.3px;
+  line-height: 1.6;
 }
 
-.fo-glass-hover:hover {
-  background: rgba(255, 255, 255, 0.07);
-  transform: translateY(-2px);
-}
+.fo-badge-brand   { background: var(--brand-primary-soft); color: var(--brand-primary); }
+.fo-badge-success { background: var(--success-soft);       color: var(--success); }
+.fo-badge-warning { background: var(--warning-soft);       color: var(--warning); }
+.fo-badge-danger  { background: var(--danger-soft);        color: var(--danger); }
+.fo-badge-neutral { background: var(--bg-soft);            color: var(--text-muted); border: 1px solid var(--border); }
 
 /* ------------------------------------------------------------
    📐 UTILIDADES
@@ -199,15 +301,20 @@ a:hover {
   width: 100%;
   height: 1px;
   background: var(--border-soft);
-  margin: 12px 0;
+  margin: 16px 0;
 }
 
-.fo-flex {
-  display: flex;
-  align-items: center;
-}
-.fo-flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.fo-flex         { display: flex; align-items: center; }
+.fo-flex-between { display: flex; align-items: center; justify-content: space-between; }
+.fo-flex-center  { display: flex; align-items: center; justify-content: center; }
+.fo-flex-col     { display: flex; flex-direction: column; }
+
+/* Glass */
+.fo-glass {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }

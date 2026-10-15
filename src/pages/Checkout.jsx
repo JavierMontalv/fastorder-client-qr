@@ -1,6 +1,6 @@
 // client-qr/src/pages/Checkout.jsx
 // ======================================================================
-// 💳 Página Checkout – FASTORDER Client-Web QR (2026)
+// 💳 Página Checkout – COMANDA Client-Web QR (2026)
 // ----------------------------------------------------------------------
 // • Contabilidad SOLO visual (UI)
 // • Backend es la única fuente contable
@@ -9,7 +9,7 @@
 // ======================================================================
 
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { crearPedido } from '../services/pedidosService';
 import { obtenerConfigRestaurante } from '../services/restauranteService';
@@ -21,9 +21,29 @@ import '../styles/Checkout.css';
 
 const IVA_RATE = 0.19;
 
+function normalizarModificacionesParaPedido(modificaciones = []) {
+  return (Array.isArray(modificaciones) ? modificaciones : [])
+    .map((grupo) => {
+      const grupoId = Number(grupo?.grupoId || grupo?.grupoModificadorId || grupo?.id || 0);
+      const opciones = Array.isArray(grupo?.opciones)
+        ? grupo.opciones
+            .map((opcion) => {
+              const opcionId = Number(opcion?.opcionId || opcion?.id || opcion || 0);
+              return opcionId ? { opcionId } : null;
+            })
+            .filter(Boolean)
+        : [];
+
+      if (!grupoId || opciones.length === 0) return null;
+      return { grupoId, opciones };
+    })
+    .filter(Boolean);
+}
+
 export default function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { slug } = useParams();
 
   const { carrito = [], mesa = null, tipoPedido: tipoDesdeQR = 'mesa' } = location.state || {};
 
@@ -42,7 +62,10 @@ export default function Checkout() {
   // 🧮 CONTABILIDAD (SOLO UI – NO FUENTE DE VERDAD)
   // ======================================================
   const subtotal = useMemo(() => {
-    return carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+    return carrito.reduce(
+      (sum, item) => sum + Number(item.precioUnitario || item.precio || 0) * Number(item.cantidad || 0),
+      0
+    );
   }, [carrito]);
 
   const iva = useMemo(() => {
@@ -101,7 +124,9 @@ export default function Checkout() {
 
         items: carrito.map((item) => ({
           productoId: item.id,
-          cantidad: item.cantidad
+          cantidad: item.cantidad,
+          modificaciones: normalizarModificacionesParaPedido(item.modificaciones),
+          instrucciones: String(item.instrucciones || '').trim()
         }))
       };
 
@@ -115,7 +140,9 @@ export default function Checkout() {
       setPedidoId(res.data.id);
       limpiarCarrito();
 
-      navigate('/pedido-exitoso');
+      navigate(slug ? `/${slug}/pedido-exitoso` : '/pedido-exitoso', {
+        state: { total: res.data.total || total, tipoPedido }
+      });
     } catch (error) {
       console.error('❌ Error creando pedido:', error);
       alert('No se pudo procesar el pedido.');
@@ -129,68 +156,112 @@ export default function Checkout() {
   // ======================================================
   if (cargandoConfig) {
     return (
-      <div className="checkout-container">
-        <h1 className="checkout-title">Confirmar pedido</h1>
-        <div className="checkout-card">
-          <p>Cargando configuración del restaurante…</p>
-        </div>
+      <div className="checkout-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Cargando…</p>
       </div>
     );
   }
 
   return (
     <div className="checkout-container">
-      <h1 className="checkout-title">Confirmar pedido</h1>
+      {/* Header */}
+      <div className="checkout-header">
+        <button className="checkout-back" onClick={() => navigate(-1)} aria-label="Volver">
+          ←
+        </button>
+        <h1 className="checkout-title">Confirmar pedido</h1>
+      </div>
 
+      {/* Tipo de pedido */}
+      {permitirLlevar && (
+        <div className="checkout-tipo-container">
+          <button
+            className={`checkout-tipo-btn ${tipoPedido === 'mesa' ? 'active' : ''}`}
+            onClick={() => setTipoPedido('mesa')}
+          >
+            🪑 En mesa
+          </button>
+          <button
+            className={`checkout-tipo-btn ${tipoPedido === 'llevar' ? 'active' : ''}`}
+            onClick={() => setTipoPedido('llevar')}
+          >
+            🥡 Para llevar
+          </button>
+        </div>
+      )}
+
+      {/* Orden */}
       <div className="checkout-card">
-        <h2>Tu orden</h2>
+        <p className="checkout-card-title">Tu orden</p>
 
         {carrito.length === 0 ? (
-          <p>No hay productos en el carrito.</p>
+          <p style={{ padding: '20px', color: 'var(--text-muted)', textAlign: 'center' }}>
+            No hay productos en el carrito.
+          </p>
         ) : (
-          carrito.map((item) => (
-            <div key={item.id} className="checkout-item">
-              <span>
-                {item.cantidad}× {item.nombre}
-              </span>
-              <span>${(item.precio * item.cantidad).toLocaleString('es-CO')}</span>
-            </div>
-          ))
+          <div className="checkout-items-list">
+            {carrito.map((item) => (
+              <div key={item.id} className="checkout-item">
+                <span className="checkout-item-name">
+                  {item.cantidad}× {item.nombre}
+                </span>
+                <span className="checkout-item-price">
+                  ${(Number(item.precioUnitario || item.precio || 0) * Number(item.cantidad || 0)).toLocaleString('es-CO')}
+                </span>
+              </div>
+            ))}
+          </div>
         )}
 
-        <div className="checkout-line">
-          <span>Subtotal</span>
-          <span>${subtotal.toLocaleString('es-CO')}</span>
-        </div>
-
-        <div className="checkout-line">
-          <span>IVA (19%)</span>
-          <span>${iva.toLocaleString('es-CO')}</span>
-        </div>
-
-        <div className="checkout-line">
-          <span>Propina</span>
-          <input
-            type="number"
-            min={0}
-            value={propina}
-            onChange={(e) => setPropina(Number(e.target.value) || 0)}
-          />
-        </div>
-
-        <div className="checkout-total">
-          <strong>Total</strong>
-          <strong>${total.toLocaleString('es-CO')}</strong>
+        <div className="checkout-totals">
+          <div className="checkout-line">
+            <span>Subtotal</span>
+            <span>${subtotal.toLocaleString('es-CO')}</span>
+          </div>
+          <div className="checkout-line">
+            <span>IVA (19%)</span>
+            <span>${iva.toLocaleString('es-CO')}</span>
+          </div>
+          <div className="checkout-line">
+            <span>Propina</span>
+            <input
+              type="number"
+              min={0}
+              value={propina}
+              onChange={(e) => setPropina(Number(e.target.value) || 0)}
+            />
+          </div>
+          <div className="checkout-total">
+            <span>Total</span>
+            <span>${total.toLocaleString('es-CO')}</span>
+          </div>
         </div>
       </div>
 
-      <button
-        className="checkout-button"
-        disabled={enviando || carrito.length === 0}
-        onClick={manejarCheckout}
-      >
-        {enviando ? 'Procesando…' : 'Confirmar pedido'}
-      </button>
+      {/* Nota */}
+      <div style={{ marginBottom: 16 }}>
+        <label className="checkout-nota-label">Nota para el restaurante (opcional)</label>
+        <textarea
+          className="checkout-nota"
+          rows={3}
+          maxLength={300}
+          placeholder="Ej: sin cebolla, alérgico a los mariscos…"
+          value={nota}
+          onChange={(e) => setNota(e.target.value)}
+        />
+      </div>
+
+      {/* Botón fijo inferior */}
+      <div className="checkout-sticky-footer">
+        <button
+          className="checkout-button"
+          disabled={enviando || carrito.length === 0}
+          onClick={manejarCheckout}
+        >
+          {enviando ? 'Procesando…' : `Confirmar pedido · $${total.toLocaleString('es-CO')}`}
+        </button>
+      </div>
     </div>
   );
 }
+

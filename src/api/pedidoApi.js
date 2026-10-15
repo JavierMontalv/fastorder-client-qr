@@ -1,5 +1,5 @@
 // ======================================================
-// 🧾 pedidoApi.js – FASTORDER ENTERPRISE (2026)
+// 🧾 pedidoApi.js – COMANDA ENTERPRISE (2026)
 // ------------------------------------------------------
 // Cliente HTTP para operaciones de pedidos.
 // Nivel RappiAliado / Shopify POS.
@@ -12,7 +12,7 @@ import api from "./axiosConfig";
 // 🔐 Helper: encabezados con token
 // ======================================================
 const authHeaders = () => {
-  const token = localStorage.getItem("fastorder_token");
+  const token = localStorage.getItem("comanda_token");
   return token
     ? { Authorization: `Bearer ${token}` }
     : {};
@@ -154,3 +154,4 @@ export const recalcularTotal = async (pedidoId) => {
     throw error.response?.data || { message: "Error recalculando total" };
   }
 };
+

@@ -1,6 +1,6 @@
 // client-qr/src/components/pedido/ItemResumenPedido.jsx
 // ======================================================================
-// 🧾 ItemResumenPedido.jsx — FASTORDER Client QR (Enterprise 2026)
+// 🧾 ItemResumenPedido.jsx — COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Micro-componente UX
 // • Encapsula un item del pedido
@@ -19,13 +19,14 @@ export default function ItemResumenPedido({ item }) {
 
   if (!item) return null;
 
-  const { id, nombre, precio, cantidad } = item;
+  const lineId = item.lineId || item.id;
+  const { nombre, precioUnitario, precio, cantidad, modificaciones = [], instrucciones } = item;
 
   // --------------------------------------------------
   // ➕ Incrementar (protección anti doble-click rápido)
   // --------------------------------------------------
   const incrementar = () => {
-    cambiarCantidad(id, Math.min(cantidad + 1, 99));
+    cambiarCantidad(lineId, Math.min(cantidad + 1, 99));
   };
 
   // --------------------------------------------------
@@ -33,14 +34,14 @@ export default function ItemResumenPedido({ item }) {
   // --------------------------------------------------
   const decrementar = () => {
     if (cantidad <= 1) return;
-    cambiarCantidad(id, cantidad - 1);
+    cambiarCantidad(lineId, cantidad - 1);
   };
 
   // --------------------------------------------------
   // 🗑️ Eliminar
   // --------------------------------------------------
   const eliminar = () => {
-    quitarProducto(id);
+    quitarProducto(lineId);
   };
 
   return (
@@ -55,7 +56,17 @@ export default function ItemResumenPedido({ item }) {
       {/* ================= INFO ================= */}
       <div className="fo-resumen-item-info">
         <div className="fo-resumen-item-nombre">{nombre}</div>
-        <div className="fo-resumen-item-precio">{formatearPrecio(precio * cantidad)}</div>
+        <div className="fo-resumen-item-precio">
+          {formatearPrecio((precioUnitario || precio) * cantidad)}
+        </div>
+        {modificaciones.length > 0 && (
+          <div className="fo-resumen-item-detalle">
+            {modificaciones
+              .flatMap((grupo) => (grupo.opciones || []).map((opcion) => opcion.nombre))
+              .join(' · ')}
+          </div>
+        )}
+        {instrucciones && <div className="fo-resumen-item-detalle muted">{instrucciones}</div>}
       </div>
 
       {/* ================= CONTROLES ================= */}
@@ -93,3 +104,4 @@ export default function ItemResumenPedido({ item }) {
     </motion.div>
   );
 }
+

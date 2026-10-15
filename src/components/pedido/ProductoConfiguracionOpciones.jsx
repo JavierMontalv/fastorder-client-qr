@@ -1,6 +1,6 @@
 // client-qr/src/components/pedido/ProductoConfiguracionOpciones.jsx
 // ======================================================================
-// 🍟 ProductoConfiguracionOpciones.jsx — FASTORDER Client QR (Enterprise 2026)
+// 🍟 ProductoConfiguracionOpciones.jsx — COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // UI PURA · Stateless
 // • Renderiza grupos de opciones
@@ -69,3 +69,4 @@ export default function ProductoConfiguracionOpciones({
     </div>
   );
 }
+

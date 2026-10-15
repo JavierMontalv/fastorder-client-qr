@@ -1,10 +1,12 @@
 // ======================================================================
-// 📦 pedidosService.js – FASTORDER Client QR 2026
+// 📦 pedidosService.js – COMANDA Client QR 2026
 // ----------------------------------------------------------------------
 // • Crea pedidos ASOCIADOS a mesa cuando exista contexto
 // • Fuente única HTTP (axios / api centralizado)
 // ======================================================================
 
+import axios from 'axios';
+import { API_BASE_URL } from '../config/env';
 import api from './api';
 
 // ======================================================
@@ -12,6 +14,16 @@ import api from './api';
 // ======================================================
 export async function crearPedido(payload) {
   const { data } = await api.post('/pedidos', payload);
+  return data;
+}
+
+export async function crearPedidoPublico(payload) {
+  const { data } = await axios.post(`${API_BASE_URL}/public/pedidos`, payload, {
+    timeout: 15000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
   return data;
 }
 
@@ -52,6 +64,15 @@ export async function obtenerEstadoPedido(pedidoId) {
   return data?.data || null;
 }
 
+export async function obtenerEstadoPedidoPublico(slug, pedidoId) {
+  if (!slug || !pedidoId) {
+    throw new Error('slug y pedidoId son obligatorios');
+  }
+
+  const { data } = await api.get(`/public/display/${slug}/pedidos/${pedidoId}/estado`);
+  return data?.data || null;
+}
+
 // ======================================================
 // 🔄 Cambiar estado del pedido
 // ======================================================
@@ -79,10 +100,13 @@ export async function llamarMesero(pedidoId) {
 // ======================================================
 const pedidosService = {
   crearPedido,
+  crearPedidoPublico,
   crearPedidoConMesa,
   obtenerEstadoPedido,
+  obtenerEstadoPedidoPublico,
   cambiarEstadoPedido,
   llamarMesero
 };
 
 export default pedidosService;
+

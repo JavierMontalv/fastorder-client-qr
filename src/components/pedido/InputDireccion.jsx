@@ -1,6 +1,6 @@
 // client-qr/src/components/pedido/InputDireccion.jsx
 // ======================================================================
-// 📍 InputDireccion.jsx – FASTORDER Client QR (Enterprise 2026)
+// 📍 InputDireccion.jsx – COMANDA Client QR (Enterprise 2026)
 // ----------------------------------------------------------------------
 // Responsabilidad ÚNICA:
 // • Capturar y validar dirección para pedidos a domicilio
@@ -87,3 +87,4 @@ export default function InputDireccion({ direccion, onChange, onValidez }) {
     </div>
   );
 }
+
