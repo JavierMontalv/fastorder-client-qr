@@ -93,6 +93,10 @@ function ProductoCardEnterprise({
             alt={producto.nombre}
             className="producto-img"
             loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            width="640"
+            height="640"
             onError={() => setImagenError(true)}
           />
         ) : (

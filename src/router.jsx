@@ -17,15 +17,16 @@
 // • Arquitectura limpia y consistente
 // ======================================================================
 
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 // Pages
-import Carrito from './pages/Carrito';
-import Checkout from './pages/Checkout';
-import EstadoPedido from './pages/EstadoPedido';
 import Menu from './pages/Menu';
-import PedidoExitoso from './pages/PedidoExitoso';
-import Plato from './pages/Plato';
+const Carrito = lazy(() => import('./pages/Carrito'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const EstadoPedido = lazy(() => import('./pages/EstadoPedido'));
+const PedidoExitoso = lazy(() => import('./pages/PedidoExitoso'));
+const Plato = lazy(() => import('./pages/Plato'));
 
 // Context
 import { useCarrito } from './context/CarritoContext';
@@ -38,11 +39,16 @@ function PlatoWrapper() {
   return <Plato onAgregar={agregarProducto} />;
 }
 
+function RouteFallback() {
+  return <div className="route-loading" role="status" aria-label="Cargando contenido" />;
+}
+
 // ======================================================================
 // 🚀 Router principal
 // ======================================================================
 export default function Router() {
   return (
+    <Suspense fallback={<RouteFallback />}>
     <Routes>
       {/* =====================================================
           🛑 ROOT (SIN QR)
@@ -108,6 +114,7 @@ export default function Router() {
       ====================================================== */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </Suspense>
   );
 }
 

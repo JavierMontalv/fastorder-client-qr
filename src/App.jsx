@@ -13,15 +13,12 @@
 // Shopify / UberEats / Stripe-style architecture
 // ===================================================================
 
-import { AnimatePresence } from 'framer-motion';
 import Router from './router';
 
 export default function App() {
   return (
     <div className="qr-app-container">
-      <AnimatePresence mode="wait">
-        <Router />
-      </AnimatePresence>
+      <Router />
     </div>
   );
 }
