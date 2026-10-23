@@ -1935,3 +1935,20 @@ body {
     height: 44px;
   }
 }
+
+/* Estabilidad tipográfica: evita saltos y superposición con nombres largos. */
+.menu-page-clean .producto-info,
+.menu-page-clean .producto-info-top,
+.menu-page-clean .producto-price-row {
+  min-width: 0;
+}
+
+.menu-page-clean .producto-price-row {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.menu-page-clean .producto-nombre {
+  min-height: 2.3em;
+  overflow-wrap: anywhere;
+}

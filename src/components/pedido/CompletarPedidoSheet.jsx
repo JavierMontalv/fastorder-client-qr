@@ -73,6 +73,7 @@ export default function CompletarPedidoSheet({
   const navigate = useNavigate();
   const MotionDiv = motion.div;
   const contentRef = useRef(null);
+  const enviandoRef = useRef(false);
   const [vista, setVista] = useState('canasta');
 
   const estadoBase = {
@@ -187,7 +188,7 @@ export default function CompletarPedidoSheet({
   const cerrar = () => onClose?.();
 
   const crearPedidoYDecidirPago = async ({ metodoPago }) => {
-    if (pedidoCreado || enviando) {
+    if (pedidoCreado || enviando || enviandoRef.current) {
       return { valido: false };
     }
 
@@ -212,6 +213,7 @@ export default function CompletarPedidoSheet({
     }
 
     try {
+      enviandoRef.current = true;
       setEnviando(true);
       setErrorEnvio('');
 
@@ -249,6 +251,7 @@ export default function CompletarPedidoSheet({
       setErrorEnvio(mensaje);
       return { valido: false };
     } finally {
+      enviandoRef.current = false;
       setEnviando(false);
     }
   };
@@ -315,7 +318,7 @@ export default function CompletarPedidoSheet({
 
             {vista === 'canasta' ? (
               <div className="fo-checkout-brand">
-                {restauranteLogo ? <img src={restauranteLogo} alt="" /> : <span>{restauranteNombre.charAt(0)}</span>}
+                {restauranteLogo ? <img src={restauranteLogo} alt="" decoding="async" /> : <span>{restauranteNombre.charAt(0)}</span>}
                 <strong>{restauranteNombre}</strong>
               </div>
             ) : (
@@ -346,7 +349,7 @@ export default function CompletarPedidoSheet({
                     return (
                       <article className="fo-cart-item-rappi" key={lineId}>
                         <div className="fo-cart-item-image">
-                          {image ? <img src={image} alt="" /> : <Utensils aria-hidden="true" />}
+                          {image ? <img src={image} alt="" loading="lazy" decoding="async" /> : <Utensils aria-hidden="true" />}
                         </div>
                         <div className="fo-cart-item-copy">
                           <h2>{item.nombre}</h2>
@@ -411,7 +414,7 @@ export default function CompletarPedidoSheet({
                               <Plus aria-hidden="true" />
                             </span>
                             <span className="fo-cart-complement-image">
-                              {image ? <img src={image} alt="" /> : <Utensils aria-hidden="true" />}
+                              {image ? <img src={image} alt="" loading="lazy" decoding="async" /> : <Utensils aria-hidden="true" />}
                             </span>
                             <strong>{producto.nombre}</strong>
                             <small>{producto.descripcion || 'Ideal para completar tu pedido'}</small>

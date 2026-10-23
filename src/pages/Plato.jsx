@@ -19,6 +19,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useCarrito } from '../context/CarritoContext';
 
 export default function Plato() {
+  const MotionDiv = motion.div;
+  const MotionButton = motion.button;
   const navigate = useNavigate();
   const { slug } = useParams();
   const { state } = useLocation();
@@ -40,16 +42,9 @@ export default function Plato() {
   // ================================================================
   const [agregado, setAgregado] = useState(false);
 
-  // ================================================================
-  // 🛡️ Fallback Enterprise (NUNCA pedir backend)
-  // ================================================================
-  if (!producto) {
-    navigate(`/${slug}`);
-    return null;
-  }
-
-  const disponible = producto.disponible !== false && producto.estado !== 'inactivo';
-  const total = producto.precio * cantidad;
+  useEffect(() => {
+    if (!producto) navigate(`/${slug}`, { replace: true });
+  }, [navigate, producto, slug]);
 
   // ================================================================
   // ⏱️ Reset micro-confirmación
@@ -63,6 +58,14 @@ export default function Plato() {
 
     return () => clearTimeout(t);
   }, [agregado]);
+
+  // ================================================================
+  // 🛡️ Fallback Enterprise (NUNCA pedir backend)
+  // ================================================================
+  if (!producto) return null;
+
+  const disponible = producto.disponible !== false && producto.estado !== 'inactivo';
+  const total = producto.precio * cantidad;
 
   // ================================================================
   // 🎯 Acción principal
@@ -80,7 +83,7 @@ export default function Plato() {
   return (
     <div className="pb-28 max-w-lg mx-auto">
       {/* ================= IMAGEN HERO ================= */}
-      <motion.div
+      <MotionDiv
         className="relative w-full h-64 overflow-hidden rounded-b-3xl shadow-md"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -89,6 +92,8 @@ export default function Plato() {
           src={producto.imagenUrl || '/no-image.png'}
           alt={producto.nombre}
           className="w-full h-full object-cover"
+          decoding="async"
+          fetchPriority="high"
         />
 
         <button
@@ -97,10 +102,10 @@ export default function Plato() {
         >
           ← Atrás
         </button>
-      </motion.div>
+      </MotionDiv>
 
       {/* ================= INFO ================= */}
-      <motion.div
+      <MotionDiv
         className="p-5 space-y-3"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -116,10 +121,10 @@ export default function Plato() {
             {producto.descripcion}
           </p>
         )}
-      </motion.div>
+      </MotionDiv>
 
       {/* ================= CANTIDAD ================= */}
-      <motion.div
+      <MotionDiv
         className="px-5 pb-5 flex items-center justify-between"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -143,10 +148,10 @@ export default function Plato() {
             +
           </button>
         </div>
-      </motion.div>
+      </MotionDiv>
 
       {/* ================= BOTÓN AGREGAR ================= */}
-      <motion.button
+      <MotionButton
         disabled={!disponible}
         onClick={manejarAgregar}
         whileTap={{ scale: 0.96 }}
@@ -160,7 +165,7 @@ export default function Plato() {
           : disponible
           ? `Agregar • $${total.toLocaleString()}`
           : 'No disponible'}
-      </motion.button>
+      </MotionButton>
     </div>
   );
 }

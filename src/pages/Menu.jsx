@@ -1,15 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Bookmark, Camera, Search, ScanLine, Share2, X } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import jsQR from 'jsqr';
 
 import CategoryNavEnterprise from '../components/CategoryNavEnterprise';
 import CarritoFlotante from '../components/CarritoFlotante';
 import PedidoEnCursoBanner from '../components/PedidoEnCursoBanner';
 import ProductoCardEnterprise from '../components/ProductoCardEnterprise';
-import ProductoConfiguracionSheet from '../components/pedido/ProductoConfiguracionSheet';
-import CompletarPedidoSheet from '../components/pedido/CompletarPedidoSheet';
-import PromocionModal from '../components/PromocionModal';
 import { useCarrito } from '../context/CarritoContext';
 import { useMesa } from '../context/MesaContext';
 import { usePedido } from '../context/PedidoContext';
@@ -33,6 +29,35 @@ import '../styles/Theme.css';
 const SPLASH_ACTIVA = 'activa';
 const SPLASH_CERRADA = 'cerrada';
 const MENU_SCROLL_OFFSET = 88;
+const MENU_CACHE_TTL_MS = 60_000;
+const MENU_CACHE_VERSION = 1;
+
+const ProductoConfiguracionSheet = lazy(() => import('../components/pedido/ProductoConfiguracionSheet'));
+const CompletarPedidoSheet = lazy(() => import('../components/pedido/CompletarPedidoSheet'));
+const PromocionModal = lazy(() => import('../components/PromocionModal'));
+
+function getMenuCacheKey(slug) {
+  return `comanda:menu:${MENU_CACHE_VERSION}:${String(slug || '').trim().toLowerCase()}`;
+}
+
+function readCachedMenu(slug) {
+  try {
+    const cached = JSON.parse(window.sessionStorage.getItem(getMenuCacheKey(slug)) || 'null');
+    if (!cached?.savedAt || Date.now() - cached.savedAt > MENU_CACHE_TTL_MS) return null;
+    if (!cached.data?.restaurante || !Array.isArray(cached.data?.categorias)) return null;
+    return cached.data;
+  } catch {
+    return null;
+  }
+}
+
+function cacheMenu(slug, data) {
+  try {
+    window.sessionStorage.setItem(getMenuCacheKey(slug), JSON.stringify({ savedAt: Date.now(), data }));
+  } catch {
+    // El menú sigue funcionando si el navegador bloquea el almacenamiento.
+  }
+}
 
 function resolveRestaurantImage(assetUrl) {
   if (!assetUrl) return null;
@@ -129,6 +154,8 @@ export default function Menu() {
       try {
         setScannerError('');
 
+        const { default: decodeQr } = await import('jsqr');
+
         if (!navigator.mediaDevices?.getUserMedia) {
           setScannerError('Este navegador no permite abrir la camara desde aqui. Usa la camara del celular para leer el QR fisico.');
           return;
@@ -166,7 +193,7 @@ export default function Menu() {
               contexto.drawImage(videoActivo, 0, 0, canvas.width, canvas.height);
 
               const imageData = contexto.getImageData(0, 0, canvas.width, canvas.height);
-              const codigo = jsQR(imageData.data, imageData.width, imageData.height, {
+              const codigo = decodeQr(imageData.data, imageData.width, imageData.height, {
                 inversionAttempts: 'attemptBoth'
               });
               const valor = codigo?.data?.trim();
@@ -322,6 +349,20 @@ export default function Menu() {
   useEffect(() => {
     if (!slug) return;
 
+    let cancelado = false;
+    const cachedMenu = readCachedMenu(slug);
+
+    if (cachedMenu) {
+      setRestaurante(cachedMenu.restaurante);
+      setCategorias(cachedMenu.categorias);
+      setInteligenciaVenta(cachedMenu.inteligenciaVenta || null);
+      setError(false);
+      setLoading(false);
+      return () => {
+        cancelado = true;
+      };
+    }
+
     const cargarMenu = async () => {
       try {
         setLoading(true);
@@ -331,17 +372,28 @@ export default function Menu() {
           categorias: categoriasData,
           inteligenciaVenta: inteligenciaVentaData
         } = await obtenerMenuPublico(slug);
+        if (!restauranteData) throw new Error('Menú no disponible');
+        if (cancelado) return;
         setRestaurante(restauranteData);
         setCategorias(Array.isArray(categoriasData) ? categoriasData : []);
         setInteligenciaVenta(inteligenciaVentaData || null);
+        cacheMenu(slug, {
+          restaurante: restauranteData,
+          categorias: Array.isArray(categoriasData) ? categoriasData : [],
+          inteligenciaVenta: inteligenciaVentaData || null
+        });
       } catch {
-        setError(true);
+        if (!cancelado) setError(true);
       } finally {
-        setLoading(false);
+        if (!cancelado) setLoading(false);
       }
     };
 
     cargarMenu();
+
+    return () => {
+      cancelado = true;
+    };
   }, [slug]);
 
   useEffect(() => {
@@ -656,14 +708,18 @@ export default function Menu() {
         '--menu-brand-secondary': colorSecundario
       }}
     >
-      <PromocionModal
-        promo={promocionActiva}
-        visible={splashVisible}
-        cargando={false}
-        onClose={cerrarPromocion}
-        registrarImpresion={registrarImpresion}
-        registrarClick={registrarClick}
-      />
+      {splashVisible ? (
+        <Suspense fallback={null}>
+          <PromocionModal
+            promo={promocionActiva}
+            visible={splashVisible}
+            cargando={false}
+            onClose={cerrarPromocion}
+            registrarImpresion={registrarImpresion}
+            registrarClick={registrarClick}
+          />
+        </Suspense>
+      ) : null}
 
       {modalLlamadoVisible && pedidoActivo?.displayCall && (
         <div className="estado-modal-backdrop" onClick={() => setModalLlamadoVisible(false)}>
@@ -713,6 +769,8 @@ export default function Menu() {
                 alt={`Portada de ${restaurante.nombre}`}
                 className="menu-hero-cover-img"
                 loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
             ) : (
               <div className="menu-hero-cover-placeholder" aria-hidden="true" />
@@ -750,6 +808,7 @@ export default function Menu() {
                   alt={`Logo de ${restaurante.nombre}`}
                   className="menu-hero-logo-img"
                   loading="eager"
+                  decoding="async"
                 />
               ) : (
                 <span className="menu-hero-logo-fallback" aria-hidden="true">
@@ -1007,11 +1066,13 @@ export default function Menu() {
       </main>
 
       {productoEnConfiguracion ? (
-        <ProductoConfiguracionSheet
-          producto={productoEnConfiguracion}
-          sugerenciaUpsell={sugerenciaProductoActiva}
-          onClose={() => setProductoEnConfiguracion(null)}
-        />
+        <Suspense fallback={null}>
+          <ProductoConfiguracionSheet
+            producto={productoEnConfiguracion}
+            sugerenciaUpsell={sugerenciaProductoActiva}
+            onClose={() => setProductoEnConfiguracion(null)}
+          />
+        </Suspense>
       ) : null}
 
       <CarritoFlotante
@@ -1021,15 +1082,17 @@ export default function Menu() {
       />
 
       {sheetPedidoAbierto ? (
-        <CompletarPedidoSheet
-          key={`pedido-${pedidoInicial.tipoPedido}-${pedidoInicial.mesaId ?? 'sin-mesa'}-${pedidoInicial.numeroMesa ?? 'sin-numero'}`}
-          slug={slug}
-          restaurante={restaurante}
-          complementos={productosComplementoCheckout}
-          pedidoInicial={pedidoInicial}
-          onClose={() => setSheetPedidoAbierto(false)}
-          onCrearPedido={crearPedidoDesdeQr}
-        />
+        <Suspense fallback={null}>
+          <CompletarPedidoSheet
+            key={`pedido-${pedidoInicial.tipoPedido}-${pedidoInicial.mesaId ?? 'sin-mesa'}-${pedidoInicial.numeroMesa ?? 'sin-numero'}`}
+            slug={slug}
+            restaurante={restaurante}
+            complementos={productosComplementoCheckout}
+            pedidoInicial={pedidoInicial}
+            onClose={() => setSheetPedidoAbierto(false)}
+            onCrearPedido={crearPedidoDesdeQr}
+          />
+        </Suspense>
       ) : null}
     </div>
   );
