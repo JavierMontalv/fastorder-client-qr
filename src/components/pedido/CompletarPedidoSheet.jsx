@@ -11,6 +11,7 @@ import { obtenerMesaPublica } from '../../services/publicApi';
 import '../../styles/BottomSheets.css';
 import '../../styles/ResumenPedido.css';
 import { guardarPedidoActivo } from '../../utils/bloqueoPedido';
+import { guardarComensalSesion, obtenerComensalSesion } from '../../utils/comensalSesion';
 import formatearPrecio from '../../utils/formatearPrecio';
 import { PASOS_PEDIDO, validarPedido } from '../../utils/validarPedido';
 
@@ -93,11 +94,15 @@ export default function CompletarPedidoSheet({
     pedidoInicialNormalizado.tipoPedido === 'mesa' && pedidoInicialNormalizado.numeroMesa
   );
 
+  const comensalGuardado = obtenerComensalSesion(
+    slug,
+    pedidoInicialNormalizado.mesaId || pedidoInicialNormalizado.numeroMesa
+  );
   const [pedido, setPedido] = useState({
     ...pedidoInicialNormalizado,
     clienteNombre:
       pedidoInicialNormalizado.clienteNombre ||
-      (pedidoInicialNormalizado.numeroMesa ? `Mesa ${pedidoInicialNormalizado.numeroMesa}` : 'Invitado'),
+      comensalGuardado?.nombre || '',
     metodoPago: pedidoInicialNormalizado.metodoPago || PAYMENT_METHODS[0].id
   });
   const [pedidoCreado, setPedidoCreado] = useState(false);
@@ -157,7 +162,7 @@ export default function CompletarPedidoSheet({
         setPedido((prev) => ({
           ...prev,
           tipoPedido: 'mesa',
-          mesaId: mesa.mesaId,
+          mesaId: mesa.mesaCuentaId ?? mesa.mesaId,
           numeroMesa: mesa.numero ?? prev.numeroMesa
         }));
       } catch (error) {
@@ -222,6 +227,12 @@ export default function CompletarPedidoSheet({
         throw new Error('No fue posible confirmar el pedido');
       }
 
+      guardarComensalSesion({
+        slug,
+        mesaId: pedidoFinal.mesaId || pedidoFinal.numeroMesa,
+        nombre: pedidoFinal.clienteNombre
+      });
+
       guardarPedidoActivo(pedidoCreadoBackend, {
         slug,
         restauranteId,
@@ -229,7 +240,8 @@ export default function CompletarPedidoSheet({
         numeroMesa: pedidoFinal.numeroMesa || numeroMesa || null,
         numeroMesaCuenta: pedidoFinal.mesaCuentaNumero || null,
         cuentaCompartidaActiva: Boolean(pedidoFinal.cuentaCompartidaActiva),
-        tipoPedido: pedidoFinal.tipoPedido || null
+        tipoPedido: pedidoFinal.tipoPedido || null,
+        clienteNombre: pedidoFinal.clienteNombre
       });
 
       setPedidoId(pedidoCreadoBackend.id);

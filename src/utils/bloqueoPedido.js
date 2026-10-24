@@ -59,6 +59,7 @@ export function guardarPedidoActivo(pedido, contexto = {}) {
       numeroMesa,
       numeroMesaCuenta,
       cuentaCompartidaActiva,
+      clienteNombre: String(contexto.clienteNombre ?? pedido?.clienteNombre ?? '').trim() || null,
       menuPath: construirRutaMenu({ slug, numeroMesa, tipoPedido })
     }
   );
