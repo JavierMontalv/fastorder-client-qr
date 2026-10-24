@@ -88,6 +88,7 @@ function formatTotal(valor) {
 
 // ─── Componente ─────────────────────────────────────────────────────
 export default function PedidoEnCursoBanner() {
+  const MotionDiv = motion.div;
   const navigate          = useNavigate();
   const { slug }          = useParams();
   const { pedidoId }      = usePedido();
@@ -100,6 +101,8 @@ export default function PedidoEnCursoBanner() {
   const idVisible    = pedidoId ?? pedidoLocal?.pedidoId ?? null;
   const total        = pedido?.total ?? pedidoLocal?.total ?? null;
   const slugLocal    = pedidoLocal?.slug ?? null;
+  const clienteNombre = pedido?.clienteNombre ?? pedidoLocal?.clienteNombre ?? null;
+  const numeroMesa = pedido?.mesa?.numero ?? pedidoLocal?.numeroMesa ?? null;
 
   // Verificar pertenencia al mismo restaurante
   const slugCorrecto = !slugLocal || slugLocal === slug;
@@ -113,7 +116,7 @@ export default function PedidoEnCursoBanner() {
   return (
     <AnimatePresence>
       {activo && (
-        <motion.div
+        <MotionDiv
           key={`pec-${idVisible}`}
           className={`pec-banner pec-banner--${cfg.tone}`}
           variants={variants}
@@ -146,15 +149,31 @@ export default function PedidoEnCursoBanner() {
             </span>
           </div>
 
+          {(clienteNombre || numeroMesa) && (
+            <div className="pec-owner" aria-label="Responsable y mesa del pedido">
+              {clienteNombre && <span>Pedido de <strong>{clienteNombre}</strong></span>}
+              {numeroMesa && <span className="pec-table-chip">Mesa {numeroMesa}</span>}
+              {totalFmt && <span className="pec-personal-total">Tu consumo: <strong>{totalFmt}</strong></span>}
+            </div>
+          )}
+
           {/* ── Cuerpo: ícono + texto ── */}
           <div className="pec-body">
             <div className={`pec-icon pec-icon--${cfg.tone}`} aria-hidden="true">
-              <span className="pec-emoji">{cfg.emoji}</span>
+              {estado === 'preparacion' || estado === 'aceptado' ? (
+                <span className="pec-pan" aria-label="Sarten en movimiento" role="img">
+                  <span className="pec-pan-body" />
+                  <span className="pec-pan-handle" />
+                  <span className="pec-pan-food">•</span>
+                </span>
+              ) : (
+                <span className="pec-emoji">{cfg.emoji}</span>
+              )}
             </div>
             <div className="pec-copy">
               <div className="pec-copy-top">
                 <span className={`pec-badge pec-badge--${cfg.tone}`}>{cfg.badge}</span>
-                {totalFmt && <span className="pec-total">{totalFmt}</span>}
+                {totalFmt && !clienteNombre && <span className="pec-total">{totalFmt}</span>}
               </div>
               <strong className="pec-titulo">{cfg.titulo}</strong>
               <p className="pec-desc">{cfg.desc}</p>
@@ -200,7 +219,7 @@ export default function PedidoEnCursoBanner() {
               );
             })}
           </div>
-        </motion.div>
+        </MotionDiv>
       )}
     </AnimatePresence>
   );

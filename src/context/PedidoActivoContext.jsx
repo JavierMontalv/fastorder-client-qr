@@ -55,6 +55,7 @@ function hydratarDesdeLocal(pedidoIdActual) {
     metodoPago: local.metodoPago ?? null,
     tiempoPreparacion: local.tiempoPreparacion ?? null,
     total: local.total ?? null,
+    clienteNombre: local.clienteNombre ?? null,
     updatedAt: local.updatedAt ?? null,
     mesa: local.numeroMesa ? { numero: local.numeroMesa } : null,
     displayCall: null
@@ -75,6 +76,7 @@ function persistirActualizacion(data, pedidoId, restauranteId) {
     metodoPago: data.metodoPago ?? null,
     tiempoPreparacion: data.tiempoPreparacion ?? null,
     total: data.total ?? null,
+    clienteNombre: data.clienteNombre ?? local?.clienteNombre ?? null,
     updatedAt: data.updatedAt ?? null,
     slug: local?.slug ?? null,
     numeroMesa: local?.numeroMesa ?? data?.mesa?.numero ?? null,
