@@ -766,6 +766,48 @@
 
 .fo-payment-row-input {
   cursor: text;
+  margin: 8px 0;
+  padding: 14px 12px;
+  border: 1.5px solid transparent;
+  border-radius: 18px;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.fo-payment-row-input.is-required {
+  border-color: #ef4444;
+  background: #fff5f5;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.09);
+}
+
+.fo-payment-row-input.is-required > svg,
+.fo-payment-row-input.is-required .fo-payment-name-heading strong,
+.fo-payment-row-input.is-required .fo-payment-name-help {
+  color: #b42318;
+}
+
+.fo-payment-row-input.is-valid {
+  border-color: #86d8a1;
+  background: #f4fff7;
+}
+
+.fo-payment-name-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fo-payment-name-heading em {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: #b42318;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .fo-payment-row-input input {
@@ -780,6 +822,30 @@
   font-size: 18px;
   line-height: 1.18;
 }
+
+.fo-payment-row-input input::placeholder {
+  color: #9f4c4c;
+  opacity: 1;
+}
+
+.fo-payment-row-input input:focus-visible {
+  outline: 2px solid #b42318;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.fo-payment-row-input .fo-payment-name-help {
+  margin-top: 7px;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.fo-payment-row-input.is-valid .fo-payment-name-heading em {
+  background: #dcfce7;
+  color: #15803d;
+}
+
 
 .fo-payment-estimate {
   margin-top: 26px;
