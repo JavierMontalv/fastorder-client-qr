@@ -74,6 +74,7 @@ export default function CompletarPedidoSheet({
   const navigate = useNavigate();
   const MotionDiv = motion.div;
   const contentRef = useRef(null);
+  const nombreInputRef = useRef(null);
   const enviandoRef = useRef(false);
   const [vista, setVista] = useState('canasta');
 
@@ -127,6 +128,7 @@ export default function CompletarPedidoSheet({
     tipoPedidoActual === 'mesa'
       ? 'Lo enviaremos directo a cocina y el equipo lo atendera en tu mesa.'
       : 'Lo prepararemos para recoger en el punto del restaurante.';
+  const clienteNombreValido = String(pedido?.clienteNombre || '').trim().length >= 2;
 
   useEffect(() => {
     if (items.length === 0 && vista !== 'confirmacion') {
@@ -477,15 +479,35 @@ export default function CompletarPedidoSheet({
                     <ChevronRight aria-hidden="true" />
                   </button>
 
-                  <label className="fo-payment-row fo-payment-row-input">
+                  <label
+                    className={`fo-payment-row fo-payment-row-input ${clienteNombreValido ? 'is-valid' : 'is-required'}`}
+                    htmlFor="fo-cliente-nombre"
+                  >
                     <ReceiptText aria-hidden="true" />
                     <span>
-                      <strong>Detalles</strong>
+                      <span className="fo-payment-name-heading">
+                        <strong>¿Quién hace este pedido?</strong>
+                        <em>{clienteNombreValido ? 'Completo' : 'Obligatorio'}</em>
+                      </span>
                       <input
+                        ref={nombreInputRef}
+                        id="fo-cliente-nombre"
+                        type="text"
                         value={pedido?.clienteNombre || ''}
                         onChange={(event) => setPedido((prev) => ({ ...prev, clienteNombre: event.target.value }))}
-                        placeholder="Nombre para identificar tu pedido"
+                        placeholder="Escribe tu nombre"
+                        maxLength={120}
+                        minLength={2}
+                        autoComplete="name"
+                        required
+                        aria-invalid={!clienteNombreValido}
+                        aria-describedby="fo-cliente-nombre-ayuda"
                       />
+                      <small id="fo-cliente-nombre-ayuda" className="fo-payment-name-help">
+                        {clienteNombreValido
+                          ? 'Listo: cocina y entrega podrán identificar tu orden.'
+                          : 'Falta tu nombre. Escríbelo para habilitar Continuar.'}
+                      </small>
                     </span>
                   </label>
 
@@ -590,7 +612,7 @@ export default function CompletarPedidoSheet({
             <button
               type="button"
               onClick={vista === 'canasta' ? asegurarContextoYContinuar : confirmarPedido}
-              disabled={resolviendoMesaQr || enviando || totalItems === 0 || (vista === 'pago' && String(pedido?.clienteNombre || '').trim().length < 2)}
+              disabled={resolviendoMesaQr || enviando || totalItems === 0 || (vista === 'pago' && !clienteNombreValido)}
             >
               {resolviendoMesaQr ? 'Validando...' : enviando ? 'Enviando...' : 'Continuar'}
             </button>
